@@ -1,4 +1,4 @@
-package com.thezayin.paksimdata.presentation.result.component
+package com.thezayin.paksimdata.presentation.web.component
 
 import android.app.Activity
 import androidx.compose.foundation.Image
@@ -28,9 +28,9 @@ import com.thezayin.paksimdata.presentation.activities.MainViewModel
 import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 
 @Composable
-fun ResultTopBar(
-    modifier: Modifier,
+fun WebScreenTopBar(
     navigator: DestinationsNavigator,
+    modifier: Modifier,
     mainViewModel: MainViewModel
 ) {
     val activity = LocalContext.current as Activity
@@ -39,7 +39,8 @@ fun ResultTopBar(
         modifier = modifier
             .fillMaxWidth()
             .padding(top = 40.dp)
-            .background(ConstantColor.NeumorphismLightBackgroundColor),
+            .background(ConstantColor.NeumorphismLightBackgroundColor)
+            .padding(horizontal = 20.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -48,9 +49,10 @@ fun ResultTopBar(
                 activity.interstitialAd(
                     scope = scope,
                     viewModel = mainViewModel,
-                    showAd = mainViewModel.remoteConfig.showAdOnResultScreenBackSelection,
-                    { navigator.navigateUp() },
-                )
+                    showAd = mainViewModel.remoteConfig.showAdOnWebScreenBackSelection,
+                ) {
+                    navigator.navigateUp()
+                }
             },
             cornerRadius = 40.dp,
             modifier = Modifier.size(40.dp)
@@ -64,7 +66,7 @@ fun ResultTopBar(
             )
         }
         Text(
-            text = "Result",
+            text = "Servers",
             color = colorResource(id = R.color.black),
             fontSize = 17.sp,
             fontFamily = FontFamily(Font(R.font.abeezee_italic)),
@@ -77,8 +79,9 @@ fun ResultTopBar(
                     activity.interstitialAd(
                         scope = scope,
                         viewModel = mainViewModel,
-                        showAd = mainViewModel.remoteConfig.showAdOnResultScreenVPNSelection,
-                    ) { navigator.navigateUp() }
+                        showAd = mainViewModel.remoteConfig.showAdOnWebScreenVPNSelection,
+                        {},
+                    )
                 },
                 cornerRadius = 40.dp,
                 modifier = Modifier.size(40.dp)
@@ -96,8 +99,9 @@ fun ResultTopBar(
                     activity.interstitialAd(
                         scope = scope,
                         viewModel = mainViewModel,
-                        showAd = mainViewModel.remoteConfig.showAdOnResultScreenIAPSelection,
-                    ) { navigator.navigateUp() }
+                        showAd = mainViewModel.remoteConfig.showAdOnWebScreenIAPSelection,
+                        {},
+                    )
                 },
                 cornerRadius = 40.dp,
                 modifier = Modifier.size(40.dp)

@@ -1,5 +1,6 @@
 package com.thezayin.paksimdata.presentation.home.component
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -21,13 +24,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.neumorphic.widgets.ShadeCard
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
+import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 import com.thezayin.paksimdata.presentation.destinations.ServerScreenDestination
 
 @Composable
 fun GetAllServices(
     modifier: Modifier,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    mainViewModel: MainViewModel
 ) {
+    val activity = LocalContext.current as Activity
+    val scope = rememberCoroutineScope()
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -43,7 +51,13 @@ fun GetAllServices(
         )
         ShadeCard(
             onClick = {
-                navigator.navigate(ServerScreenDestination)
+                activity.interstitialAd(
+                    scope = scope,
+                    viewModel = mainViewModel,
+                    showAd = mainViewModel.remoteConfig.showAdOnHomeScreenServerSelection
+                ) {
+                    navigator.navigate(ServerScreenDestination)
+                }
             },
             cornerRadius = 10.dp,
             modifier = Modifier.height(100.dp)

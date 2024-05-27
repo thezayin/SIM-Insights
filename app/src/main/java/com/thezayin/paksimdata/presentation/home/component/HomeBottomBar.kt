@@ -12,12 +12,14 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.framework.nativead.GoogleNativeAd
 import com.thezayin.framework.nativead.GoogleNativeAdStyle
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
 
 @Composable
 fun HomeBottomBar(
     modifier: Modifier,
     navigator: DestinationsNavigator,
-    nativeAd: NativeAd?
+    nativeAd: NativeAd?,
+    mainViewModel: MainViewModel
 ) {
     Column(
         modifier = modifier
@@ -26,13 +28,16 @@ fun HomeBottomBar(
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         GetAllServices(
+            mainViewModel = mainViewModel,
             modifier = Modifier,
             navigator = navigator
         )
-        GoogleNativeAd(
-            modifier = Modifier,
-            style = GoogleNativeAdStyle.Small,
-            nativeAd = nativeAd
-        )
+        if (mainViewModel.remoteConfig.showAdOnHomeScreenNative) {
+            GoogleNativeAd(
+                modifier = Modifier,
+                style = GoogleNativeAdStyle.Small,
+                nativeAd = nativeAd
+            )
+        }
     }
 }

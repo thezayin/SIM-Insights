@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+    id ("kotlinx-serialization")
+    id ("kotlin-parcelize")
 }
 
 android {
@@ -78,4 +80,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.inappmessaging.display)
     implementation(libs.firebase.config)
+
+    //serialization
+    api (libs.kotlinx.serialization.json)
 }

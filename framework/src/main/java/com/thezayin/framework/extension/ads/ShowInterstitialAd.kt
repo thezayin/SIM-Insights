@@ -1,59 +1,59 @@
 package com.thezayin.framework.extension.ads
 
 import android.app.Activity
+import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.thezayin.ads.GoogleManager
 import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.analytics.helpers.AnalyticsHelper
-import com.thezayin.framework.remote.RemoteConfig
 
 fun showInterstitialAd(
-    googleManager: GoogleManager,
     activity: Activity,
-    analytics: AnalyticsHelper,
-    remoteConfig: RemoteConfig,
-    callBack: () -> Unit,
+    manager: GoogleManager,
+    boolean: Boolean,
+    callBack: (InterstitialAdStatus) -> Unit = {}
 ) {
-    if (!remoteConfig.showAdOnAppOpen) {
-        callBack()
+    if (!boolean) {
+        callBack(InterstitialAdStatus.AdNotAvailable)
         return
     }
 
-    googleManager.createInterstitialAd()?.apply {
-        fullScreenContentCallback = object : FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                super.onAdDismissedFullScreenContent()
-                callBack()
-            }
-
-            override fun onAdImpression() {
-                super.onAdImpression()
-                analytics.logEvent(
-                    AnalyticsEvent(
-                        type = AnalyticsEvent.Types.AD_IMPRESSION,
-                        extras = listOf(
-                            AnalyticsEvent.Param(AnalyticsEvent.ParamKeys.AD_TYPE, "appOpen ad"),
-                        ),
-                    ),
-                )
-            }
-
-            override fun onAdFailedToShowFullScreenContent(error: AdError) {
-                super.onAdFailedToShowFullScreenContent(error)
-                callBack()
-            }
-        }
+    val adMob: InterstitialAd? = manager.createInterstitialAd()
+    adMob?.apply {
+        fullScreenContentCallback = AdmobInterListener(callBack)
         show(activity)
-    } ?: run { callBack() }
+    }
 }
 
-fun Activity?.showInterstitialAd(
-    googleManager: GoogleManager,
-    analytics: AnalyticsHelper,
-    remoteConfig: RemoteConfig,
-    callback: () -> Unit
-) {
-    this?.let { showInterstitialAd(googleManager, this, analytics, remoteConfig, callback) }
-        ?: callback()
+internal class AdmobInterListener(
+    private val callback: (InterstitialAdStatus) -> Unit,
+) :
+    FullScreenContentCallback() {
+    private var clicks = 0
+    override fun onAdClicked() {
+        super.onAdClicked()
+        clicks++
+    }
+
+    override fun onAdDismissedFullScreenContent() {
+        super.onAdDismissedFullScreenContent()
+        callback.invoke(InterstitialAdStatus.Shown(clicks, "Google"))
+    }
+
+    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+        super.onAdFailedToShowFullScreenContent(p0)
+        callback.invoke(InterstitialAdStatus.AdNotAvailable)
+    }
+}
+
+sealed class InterstitialAdStatus {
+    data class Shown(
+        val clicks: Int,
+        val vendor: String,
+    ) : InterstitialAdStatus()
+
+    data object AdNotAvailable : InterstitialAdStatus()
+    data object AdAvailable : InterstitialAdStatus()
 }

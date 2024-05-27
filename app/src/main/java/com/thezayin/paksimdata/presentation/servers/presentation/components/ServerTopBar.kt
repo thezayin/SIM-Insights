@@ -1,5 +1,6 @@
 package com.thezayin.paksimdata.presentation.servers.presentation.components
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,24 +10,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.neumorphic.ConstantColor
 import com.thezayin.neumorphic.widgets.ShadeCard
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
+import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 
 @Composable
 fun ServerTopBar(
     navigator: DestinationsNavigator,
-    modifier: Modifier
+    modifier: Modifier,
+    mainViewModel: MainViewModel
 ) {
+    val scope = rememberCoroutineScope()
+    val activity = LocalContext.current as Activity
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -37,7 +44,15 @@ fun ServerTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ShadeCard(
-            onClick = { navigator.navigateUp() },
+            onClick = {
+                activity.interstitialAd(
+                    scope = scope,
+                    viewModel = mainViewModel,
+                    showAd = mainViewModel.remoteConfig.showAdOnServerScreenBackSelection,
+                ) {
+                    navigator.navigateUp()
+                }
+            },
             cornerRadius = 40.dp,
             modifier = Modifier.size(40.dp)
         ) {
@@ -59,7 +74,14 @@ fun ServerTopBar(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             ShadeCard(
-                onClick = {},
+                onClick = {
+                    activity.interstitialAd(
+                        scope = scope,
+                        viewModel = mainViewModel,
+                        showAd = mainViewModel.remoteConfig.showAdOnServerScreenVPNSelection,
+                        {},
+                    )
+                },
                 cornerRadius = 40.dp,
                 modifier = Modifier.size(40.dp)
             ) {
@@ -72,7 +94,14 @@ fun ServerTopBar(
                 )
             }
             ShadeCard(
-                onClick = { },
+                onClick = {
+                    activity.interstitialAd(
+                        scope = scope,
+                        viewModel = mainViewModel,
+                        showAd = mainViewModel.remoteConfig.showAdOnServerScreenIAPSelection,
+                        {},
+                    )
+                },
                 cornerRadius = 40.dp,
                 modifier = Modifier.size(40.dp)
             ) {
