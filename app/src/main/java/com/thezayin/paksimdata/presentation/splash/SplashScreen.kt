@@ -78,7 +78,7 @@ fun SplashScreen(
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 10.dp),
-                text = "Pakistan SIM Data",
+                text = "SIM Insights",
                 fontSize = 19.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = FontFamily(Font(com.thezayin.core.R.font.abeezee_regular))

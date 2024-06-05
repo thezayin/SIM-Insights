@@ -39,6 +39,7 @@ private const val SHOW_AD_ON_SETTING_SCREEN_IAP_SELECTION = "settingScreenIAPSel
 private const val SHOW_AD_ON_SETTING_SCREEN_BACK_SELECTION = "settingScreenBackSelectionAd"
 
 private const val INIT_ADS = "init_ads"
+private const val SHOW_PREMIUM_BUTTON = "showPremiumButton"
 
 private const val SERVER_URL_FIRST = "server_1_url"
 private const val SERVER_URL_SECOND = "server_2_url"
@@ -51,6 +52,7 @@ class RemoteConfig {
     private val default: Map<String, Any> = mapOf(
         INIT_ADS to true,
         SHOW_AD_ON_APP_OPEN to true,
+        SHOW_PREMIUM_BUTTON to true,
         SERVER_URL_FIRST to "https://simdatabase.info/search",
         SERVER_URL_SECOND to "https://simownerdetail.com/search",
         SERVER_URL_THIRD to "https://pakdb.xyz/sim-ownership/",
@@ -111,6 +113,9 @@ class RemoteConfig {
 
     val initAds: Boolean
         get() = config[INIT_ADS].asBoolean()
+
+    val showPremiumButton: Boolean
+        get() = config[SHOW_PREMIUM_BUTTON].asBoolean()
 
     val showAdOnAppOpen: Boolean
         get() = config[SHOW_AD_ON_APP_OPEN].asBoolean()

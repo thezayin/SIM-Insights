@@ -40,7 +40,7 @@ fun SettingHeader() {
             Image(painter = painterResource(id = R.drawable.ic_main), contentDescription = "Logo")
         }
         Text(
-            text = "Pak Sim Data",
+            text = "SIM Insights",
             fontSize = 20.sp,
             fontFamily = FontFamily(Font(com.thezayin.core.R.font.abeezee_regular)),
             color = colorResource(id = com.thezayin.core.R.color.black),

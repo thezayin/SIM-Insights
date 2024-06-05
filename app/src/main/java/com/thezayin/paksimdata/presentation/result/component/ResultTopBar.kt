@@ -91,24 +91,26 @@ fun ResultTopBar(
                         .padding(10.dp),
                 )
             }
-            ShadeCard(
-                onClick = {
-                    activity.interstitialAd(
-                        scope = scope,
-                        viewModel = mainViewModel,
-                        showAd = mainViewModel.remoteConfig.showAdOnResultScreenIAPSelection,
-                    ) { navigator.navigateUp() }
-                },
-                cornerRadius = 40.dp,
-                modifier = Modifier.size(40.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_crown),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(10.dp),
-                )
+            if (mainViewModel.remoteConfig.showPremiumButton) {
+                ShadeCard(
+                    onClick = {
+                        activity.interstitialAd(
+                            scope = scope,
+                            viewModel = mainViewModel,
+                            showAd = mainViewModel.remoteConfig.showAdOnResultScreenIAPSelection,
+                        ) { navigator.navigateUp() }
+                    },
+                    cornerRadius = 40.dp,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_crown),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(10.dp),
+                    )
+                }
             }
         }
     }
