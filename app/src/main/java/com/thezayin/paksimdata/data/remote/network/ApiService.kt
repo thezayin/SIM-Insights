@@ -1,6 +1,5 @@
 package com.thezayin.paksimdata.data.remote.network
 
-import android.util.Log
 import com.thezayin.framework.utils.Constants.BASE_URL
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -21,6 +20,7 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.contentType
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 
 class ApiService {
     companion object {
@@ -49,7 +49,7 @@ class ApiService {
         install(Logging) {
             logger = object : Logger {
                 override fun log(message: String) {
-                    Log.i(TAG_KTOR_LOGGER, message)
+                    Timber.tag(TAG_KTOR_LOGGER).i(message)
                 }
             }
         }
@@ -60,7 +60,7 @@ class ApiService {
 
         install(ResponseObserver) {
             onResponse { response ->
-                Log.i(TAG_KTOR_HTTPS_STATUS_LOGGER, "Response: ${response.status.value}")
+                Timber.tag(TAG_KTOR_HTTPS_STATUS_LOGGER).i("Response: %s", response.status.value)
             }
         }
 
@@ -79,7 +79,7 @@ class ApiService {
         }
     }
 
-    suspend fun searchNumber(number: String):String{
+    suspend fun searchNumber(number: String): String {
         return client.get {
             url(BASE_URL)
             parameter("type", "mobile")

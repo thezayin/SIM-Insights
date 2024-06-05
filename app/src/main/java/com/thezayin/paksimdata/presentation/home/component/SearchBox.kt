@@ -1,5 +1,6 @@
 package com.thezayin.paksimdata.presentation.home.component
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +11,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -24,15 +27,18 @@ import com.thezayin.neumorphic.ConstantColor
 import com.thezayin.neumorphic.Convexity
 import com.thezayin.neumorphic.widgets.ShadeCard
 import com.thezayin.neumorphic.widgets.ShadeSearchBar
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
+import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 import com.thezayin.paksimdata.presentation.home.HomeViewModel
 
 @Composable
 fun SearchBox(
-    modifier: Modifier, viewModel: HomeViewModel
+    modifier: Modifier, viewModel: HomeViewModel, mainViewModel: MainViewModel
 ) {
     val number = remember { mutableStateOf(TextFieldValue()) }
     val showWarning = remember { mutableStateOf(false) }
-
+    val activity = LocalContext.current as Activity
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = modifier
@@ -73,8 +79,14 @@ fun SearchBox(
             ShadeCard(
                 onClick = {
                     if (number.value.text.length == 11) {
-                        viewModel.searchNumber(number.value.text)
-                        showWarning.value = false
+                        activity.interstitialAd(
+                            scope = scope,
+                            viewModel = mainViewModel,
+                            showAd = mainViewModel.remoteConfig.showAdOnSearchClick,
+                        ) {
+                            viewModel.searchNumber(number.value.text)
+                            showWarning.value = false
+                        }
                     } else {
                         showWarning.value = true
                     }

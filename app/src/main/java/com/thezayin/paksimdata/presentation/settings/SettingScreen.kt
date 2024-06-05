@@ -63,14 +63,16 @@ fun SettingScreen(
             .navigationBarsPadding(),
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
         topBar = {
-            SettingTopBar(modifier = Modifier, navigator = navigator)
+            SettingTopBar(modifier = Modifier, navigator = navigator, mainViewModel = mainViewModel)
         },
         bottomBar = {
-            GoogleNativeAd(
-                modifier = Modifier,
-                style = GoogleNativeAdStyle.Small,
-                nativeAd = nativeAd.value
-            )
+            if (mainViewModel.remoteConfig.showAdOnSettingScreenNative) {
+                GoogleNativeAd(
+                    modifier = Modifier,
+                    style = GoogleNativeAdStyle.Small,
+                    nativeAd = nativeAd.value
+                )
+            }
         }
     ) { paddingValues ->
         Column(

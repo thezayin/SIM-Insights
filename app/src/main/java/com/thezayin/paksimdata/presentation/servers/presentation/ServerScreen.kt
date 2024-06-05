@@ -48,7 +48,10 @@ fun ServerScreen(
     }
 
     if (isLoading) {
-        LoadingDialog()
+        LoadingDialog(
+            viewModel = mainViewModel,
+            showAd = mainViewModel.remoteConfig.showAdOnServerScreenLoadingDialog
+        )
     }
 
     ComposableLifecycle { _, event ->
@@ -76,14 +79,16 @@ fun ServerScreen(
             .navigationBarsPadding(),
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
         topBar = {
-            ServerTopBar(navigator = navigator, modifier = Modifier)
+            ServerTopBar(navigator = navigator, modifier = Modifier, mainViewModel = mainViewModel)
         },
         bottomBar = {
-            GoogleNativeAd(
-                nativeAd = nativeAd.value,
-                style = GoogleNativeAdStyle.Small,
-                modifier = Modifier.navigationBarsPadding()
-            )
+            if (mainViewModel.remoteConfig.showAdOnServerScreenNative) {
+                GoogleNativeAd(
+                    nativeAd = nativeAd.value,
+                    style = GoogleNativeAdStyle.Small,
+                    modifier = Modifier.navigationBarsPadding()
+                )
+            }
         }
     ) { padding ->
         ServerList(

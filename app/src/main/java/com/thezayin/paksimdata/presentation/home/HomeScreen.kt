@@ -51,7 +51,10 @@ fun HomeScreen(navigator: DestinationsNavigator) {
     }
 
     if (isLoading) {
-        LoadingDialog()
+        LoadingDialog(
+            mainViewModel,
+            showAd = mainViewModel.remoteConfig.showAdOnHomeScreenLoadingDialog
+        )
     }
 
     val simDetailsModel = viewModel.simDetails.collectAsState().value.data.value
@@ -88,20 +91,26 @@ fun HomeScreen(navigator: DestinationsNavigator) {
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
 
         topBar = {
-            TopBarComponent(modifier = Modifier, navigator = navigator)
+            TopBarComponent(
+                modifier = Modifier,
+                navigator = navigator,
+                mainViewModel = mainViewModel
+            )
         },
 
         bottomBar = {
             HomeBottomBar(
                 modifier = Modifier.navigationBarsPadding(),
                 navigator = navigator,
-                nativeAd = nativeAd.value
+                nativeAd = nativeAd.value,
+                mainViewModel = mainViewModel
             )
         }
     ) { padding ->
         SearchBox(
             modifier = Modifier.padding(padding),
             viewModel = viewModel,
+            mainViewModel = mainViewModel,
         )
     }
 

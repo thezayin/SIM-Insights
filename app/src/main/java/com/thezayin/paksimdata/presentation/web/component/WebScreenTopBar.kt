@@ -1,4 +1,4 @@
-package com.thezayin.paksimdata.presentation.servers.presentation.components
+package com.thezayin.paksimdata.presentation.web.component
 
 import android.app.Activity
 import androidx.compose.foundation.Image
@@ -21,19 +21,20 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.thezayin.core.R
 import com.thezayin.neumorphic.ConstantColor
 import com.thezayin.neumorphic.widgets.ShadeCard
 import com.thezayin.paksimdata.presentation.activities.MainViewModel
 import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 
 @Composable
-fun ServerTopBar(
+fun WebScreenTopBar(
     navigator: DestinationsNavigator,
     modifier: Modifier,
     mainViewModel: MainViewModel
 ) {
-    val scope = rememberCoroutineScope()
     val activity = LocalContext.current as Activity
+    val scope = rememberCoroutineScope()
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -48,7 +49,7 @@ fun ServerTopBar(
                 activity.interstitialAd(
                     scope = scope,
                     viewModel = mainViewModel,
-                    showAd = mainViewModel.remoteConfig.showAdOnServerScreenBackSelection,
+                    showAd = mainViewModel.remoteConfig.showAdOnWebScreenBackSelection,
                 ) {
                     navigator.navigateUp()
                 }
@@ -57,7 +58,7 @@ fun ServerTopBar(
             modifier = Modifier.size(40.dp)
         ) {
             Image(
-                painter = painterResource(id = com.thezayin.core.R.drawable.ic_back),
+                painter = painterResource(id = R.drawable.ic_back),
                 contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
@@ -66,9 +67,9 @@ fun ServerTopBar(
         }
         Text(
             text = "Servers",
-            color = colorResource(id = com.thezayin.core.R.color.black),
+            color = colorResource(id = R.color.black),
             fontSize = 17.sp,
-            fontFamily = FontFamily(Font(com.thezayin.core.R.font.abeezee_italic)),
+            fontFamily = FontFamily(Font(R.font.abeezee_italic)),
         )
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -78,7 +79,7 @@ fun ServerTopBar(
                     activity.interstitialAd(
                         scope = scope,
                         viewModel = mainViewModel,
-                        showAd = mainViewModel.remoteConfig.showAdOnServerScreenVPNSelection,
+                        showAd = mainViewModel.remoteConfig.showAdOnWebScreenVPNSelection,
                         {},
                     )
                 },
@@ -86,7 +87,7 @@ fun ServerTopBar(
                 modifier = Modifier.size(40.dp)
             ) {
                 Image(
-                    painter = painterResource(id = com.thezayin.core.R.drawable.ic_vpn),
+                    painter = painterResource(id = R.drawable.ic_vpn),
                     contentDescription = null,
                     modifier = Modifier
                         .size(40.dp)
@@ -99,7 +100,7 @@ fun ServerTopBar(
                         activity.interstitialAd(
                             scope = scope,
                             viewModel = mainViewModel,
-                            showAd = mainViewModel.remoteConfig.showAdOnServerScreenIAPSelection,
+                            showAd = mainViewModel.remoteConfig.showAdOnWebScreenIAPSelection,
                             {},
                         )
                     },
@@ -107,7 +108,7 @@ fun ServerTopBar(
                     modifier = Modifier.size(40.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = com.thezayin.core.R.drawable.ic_crown),
+                        painter = painterResource(id = R.drawable.ic_crown),
                         contentDescription = null,
                         modifier = Modifier
                             .size(40.dp)

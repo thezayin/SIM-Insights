@@ -1,5 +1,6 @@
 package com.thezayin.paksimdata.presentation.result.component
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,8 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -21,12 +24,17 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.core.R
 import com.thezayin.neumorphic.ConstantColor
 import com.thezayin.neumorphic.widgets.ShadeCard
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
+import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 
 @Composable
 fun ResultTopBar(
     modifier: Modifier,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    mainViewModel: MainViewModel
 ) {
+    val activity = LocalContext.current as Activity
+    val scope = rememberCoroutineScope()
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -36,7 +44,14 @@ fun ResultTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         ShadeCard(
-            onClick = { navigator.navigateUp() },
+            onClick = {
+                activity.interstitialAd(
+                    scope = scope,
+                    viewModel = mainViewModel,
+                    showAd = mainViewModel.remoteConfig.showAdOnResultScreenBackSelection,
+                    { navigator.navigateUp() },
+                )
+            },
             cornerRadius = 40.dp,
             modifier = Modifier.size(40.dp)
         ) {
@@ -58,7 +73,13 @@ fun ResultTopBar(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             ShadeCard(
-                onClick = {},
+                onClick = {
+                    activity.interstitialAd(
+                        scope = scope,
+                        viewModel = mainViewModel,
+                        showAd = mainViewModel.remoteConfig.showAdOnResultScreenVPNSelection,
+                    ) { navigator.navigateUp() }
+                },
                 cornerRadius = 40.dp,
                 modifier = Modifier.size(40.dp)
             ) {
@@ -70,18 +91,26 @@ fun ResultTopBar(
                         .padding(10.dp),
                 )
             }
-            ShadeCard(
-                onClick = { },
-                cornerRadius = 40.dp,
-                modifier = Modifier.size(40.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_crown),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(40.dp)
-                        .padding(10.dp),
-                )
+            if (mainViewModel.remoteConfig.showPremiumButton) {
+                ShadeCard(
+                    onClick = {
+                        activity.interstitialAd(
+                            scope = scope,
+                            viewModel = mainViewModel,
+                            showAd = mainViewModel.remoteConfig.showAdOnResultScreenIAPSelection,
+                        ) { navigator.navigateUp() }
+                    },
+                    cornerRadius = 40.dp,
+                    modifier = Modifier.size(40.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_crown),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .padding(10.dp),
+                    )
+                }
             }
         }
     }

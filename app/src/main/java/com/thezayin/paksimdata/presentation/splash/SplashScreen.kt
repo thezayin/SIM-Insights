@@ -12,9 +12,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -26,8 +28,12 @@ import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import com.thezayin.neumorphic.ConstantColor
 import com.thezayin.paksimdata.R
+import com.thezayin.paksimdata.presentation.activities.MainActivity
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
+import com.thezayin.paksimdata.presentation.activities.dialogs.interstitialAd
 import com.thezayin.paksimdata.presentation.destinations.HomeScreenDestination
 import kotlinx.coroutines.delay
+import org.koin.compose.koinInject
 
 @Composable
 @RootNavGraph(start = true)
@@ -35,9 +41,18 @@ import kotlinx.coroutines.delay
 fun SplashScreen(
     navigator: DestinationsNavigator
 ) {
-    LaunchedEffect(key1 = Unit) {
-        delay(4000L)
-        navigator.navigate(HomeScreenDestination)
+    val mainViewModel: MainViewModel = koinInject()
+    val activity = LocalContext.current as MainActivity
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(Unit) {
+        delay(5000L)
+        activity.interstitialAd(
+            scope= scope,
+            viewModel = mainViewModel,
+            showAd = mainViewModel.remoteConfig.showAdOnAppOpen
+        ) {
+            navigator.navigate(HomeScreenDestination)
+        }
     }
 
     Box(
@@ -62,10 +77,11 @@ fun SplashScreen(
             verticalArrangement = Arrangement.Bottom
         ) {
             Text(
-                text = "Pakistan SIM Data",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                fontFamily = FontFamily(Font(com.thezayin.core.R.font.abeezee_italic))
+                modifier = Modifier.padding(bottom = 10.dp),
+                text = "SIM Insights",
+                fontSize = 19.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = FontFamily(Font(com.thezayin.core.R.font.abeezee_regular))
             )
         }
     }

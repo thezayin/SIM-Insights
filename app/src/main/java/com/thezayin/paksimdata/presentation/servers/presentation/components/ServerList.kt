@@ -49,8 +49,7 @@ fun ServerList(
                     server = serverList[server],
                     modifier = Modifier,
                     navigator = navigator,
-                    googleManager = mainViewModel.googleManager,
-                    remoteConfig = mainViewModel.remoteConfig
+                    mainViewModel = mainViewModel
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
             }

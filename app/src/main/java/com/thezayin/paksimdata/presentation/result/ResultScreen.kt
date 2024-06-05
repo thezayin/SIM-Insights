@@ -74,7 +74,7 @@ fun ResultScreen(
         Column(
             modifier = Modifier.padding(horizontal = 25.dp)
         ) {
-            ResultTopBar(modifier = Modifier, navigator = navigator)
+            ResultTopBar(mainViewModel = mainViewModel, modifier = Modifier, navigator = navigator)
             Text(
                 text = "Result",
                 modifier = Modifier.padding(top = 34.dp, bottom = 24.dp),
@@ -87,10 +87,12 @@ fun ResultScreen(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Bottom
         ) {
-            GoogleNativeAd(
-                nativeAd = nativeAd.value,
-                style = GoogleNativeAdStyle.Small,
-            )
+            if (mainViewModel.remoteConfig.showAdOnResultScreenNative) {
+                GoogleNativeAd(
+                    nativeAd = nativeAd.value,
+                    style = GoogleNativeAdStyle.Small,
+                )
+            }
         }
     }
 }

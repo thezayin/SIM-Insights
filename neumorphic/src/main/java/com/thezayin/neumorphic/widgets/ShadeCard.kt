@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package com.thezayin.neumorphic.widgets
 
 import android.view.MotionEvent

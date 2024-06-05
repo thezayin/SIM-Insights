@@ -21,22 +21,32 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.thezayin.framework.lifecycles.ComposableLifecycle
+import com.thezayin.framework.nativead.GoogleNativeAd
+import com.thezayin.framework.nativead.GoogleNativeAdStyle
 import com.thezayin.neumorphic.ConstantColor
+import com.thezayin.paksimdata.presentation.activities.MainViewModel
 import com.thezayin.paksimdata.presentation.activities.dialogs.LoadingDialog
 import com.thezayin.paksimdata.presentation.activities.dialogs.NetworkDialog
 import com.thezayin.paksimdata.presentation.activities.dialogs.NetworkErrorDialog
 import com.thezayin.paksimdata.presentation.servers.presentation.ServerViewModel
-import com.thezayin.paksimdata.presentation.servers.presentation.components.ServerTopBar
 import com.thezayin.paksimdata.presentation.web.component.WebAppInterface
+import com.thezayin.paksimdata.presentation.web.component.WebScreenTopBar
 import com.thezayin.paksimdata.presentation.web.component.removeElement
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import timber.log.Timber
 import java.io.BufferedReader
 import java.io.ByteArrayInputStream
 import java.io.IOException
@@ -52,12 +62,15 @@ fun WebViewScreen(
 ) {
     val context = LocalContext.current
     val viewModel: ServerViewModel = koinInject()
+    val mainViewModel: MainViewModel = koinInject()
     var checkNetwork by remember { mutableStateOf(false) }
     var checkBlocked by remember { mutableStateOf(false) }
     var backEnabled by remember { mutableStateOf(false) }
     var webView: WebView? = null
     val infoDialog = remember { mutableStateOf(false) }
     val isLoading = viewModel.loading.collectAsState().value.isLoading.value
+    val scope = rememberCoroutineScope()
+    val nativeAd = remember { mainViewModel.nativeAd }
 
     val adServers = StringBuilder()
     var line: String?
@@ -72,14 +85,33 @@ fun WebViewScreen(
         e.printStackTrace()
     }
 
+    ComposableLifecycle { _, event ->
+        when (event) {
+            Lifecycle.Event.ON_START -> {
+                scope.launch {
+                    while (this.isActive) {
+                        mainViewModel.getNativeAd()
+                        Timber.d("Native_Ad", "getNativeAd:${nativeAd} ")
+                        delay(20000L)
+                    }
+                }
+            }
 
+            else -> {
+                Timber.tag("Native_Ad").d("Not Called")
+            }
+        }
+    }
 
     if (checkNetwork) {
         NetworkDialog(showDialog = { checkNetwork = it })
     }
 
     if (isLoading) {
-        LoadingDialog()
+        LoadingDialog(
+            viewModel = mainViewModel,
+            showAd = mainViewModel.remoteConfig.showAdOnWebScreenLoadingDialog
+        )
     }
     if (checkBlocked) {
         NetworkErrorDialog(showDialog = { checkBlocked = it }, navigator = navigator)
@@ -91,7 +123,20 @@ fun WebViewScreen(
             .navigationBarsPadding(),
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
         topBar = {
-            ServerTopBar(navigator = navigator, modifier = Modifier)
+            WebScreenTopBar(
+                navigator = navigator,
+                modifier = Modifier,
+                mainViewModel = mainViewModel
+            )
+        },
+        bottomBar = {
+            if (mainViewModel.remoteConfig.showAdOnWebScreenNative) {
+                GoogleNativeAd(
+                    nativeAd = nativeAd.value,
+                    style = GoogleNativeAdStyle.Small,
+                    modifier = Modifier.navigationBarsPadding()
+                )
+            }
         }
     ) { paddingValues ->
         AndroidView(
