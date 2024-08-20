@@ -24,7 +24,7 @@ import androidx.compose.ui.window.Dialog
 
 @Composable
 fun ErrorDialog(showDialog: (Boolean) -> Unit = {}, callback: () -> Unit = {}, error: String) {
-    Dialog(onDismissRequest = { }) {
+    Dialog(onDismissRequest = {}) {
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = colorResource(id = com.thezayin.values.R.color.white),
