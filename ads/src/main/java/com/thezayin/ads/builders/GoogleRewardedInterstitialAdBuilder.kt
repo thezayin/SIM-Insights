@@ -7,8 +7,13 @@ import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 import com.thezayin.ads.AdBuilder
 import com.thezayin.ads.AdStatus
+import com.thezayin.analytics.analytics.Analytics
 
-class GoogleRewardedInterstitialAdBuilder(private val context: Context, private val id: String) :
+class GoogleRewardedInterstitialAdBuilder(
+    private val context: Context,
+    private val id: String,
+    private val analytics: Analytics
+) :
     AdBuilder<RewardedInterstitialAd>() {
     override val platform: String = "AdMob_Interstitial"
 

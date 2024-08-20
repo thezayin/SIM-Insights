@@ -13,8 +13,26 @@
             <option value="$PROJECT_DIR$/analytics" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/framework" />
-            <option value="$PROJECT_DIR$/neumorphic" />
+            <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/di" />
+            <option value="$PROJECT_DIR$/core/drawable" />
+            <option value="$PROJECT_DIR$/core/font" />
+            <option value="$PROJECT_DIR$/core/framework" />
+            <option value="$PROJECT_DIR$/core/values" />
+            <option value="$PROJECT_DIR$/home" />
+            <option value="$PROJECT_DIR$/premium" />
+            <option value="$PROJECT_DIR$/result" />
+            <option value="$PROJECT_DIR$/result/data" />
+            <option value="$PROJECT_DIR$/result/domain" />
+            <option value="$PROJECT_DIR$/result/presentation" />
+            <option value="$PROJECT_DIR$/server" />
+            <option value="$PROJECT_DIR$/server/data" />
+            <option value="$PROJECT_DIR$/server/domain" />
+            <option value="$PROJECT_DIR$/server/presentation" />
+            <option value="$PROJECT_DIR$/setting" />
+            <option value="$PROJECT_DIR$/splash" />
+            <option value="$PROJECT_DIR$/splash/presentation" />
+            <option value="$PROJECT_DIR$/web" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

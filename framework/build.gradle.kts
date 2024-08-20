@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-kapt")
     id ("kotlinx-serialization")
     id ("kotlin-parcelize")
@@ -8,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.thezayin.framework"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -35,11 +36,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
-
     buildFeatures {
         compose = true
         dataBinding = true

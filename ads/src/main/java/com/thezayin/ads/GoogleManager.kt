@@ -17,9 +17,14 @@ import com.thezayin.ads.builders.GoogleRewardedAdBuilder
 import com.thezayin.ads.builders.GoogleRewardedInterstitialAdBuilder
 import com.thezayin.ads.ump.ConsentManager
 import com.thezayin.ads.utils.AdUnit
+import com.thezayin.analytics.analytics.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 
 class GoogleManager(
-    private val context: Context, private val consentManager: ConsentManager,
+    private val context: Context,
+    private val consentManager: ConsentManager,
+    private val analytics: Analytics
+
 ) {
     private val debug get() = BuildConfig.DEBUG
     private var googleInterAd: GoogleAd<InterstitialAd>? = null
@@ -47,20 +52,27 @@ class GoogleManager(
             RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
         )
 
-        googleRewardedInterstitialAd = ::GoogleRewardedInterstitialAdBuilder.from(AdUnit.rewardedInterstitial)
+        googleRewardedInterstitialAd =
+            ::GoogleRewardedInterstitialAdBuilder.from(AdUnit.rewardedInterstitial)
         googleRewardedAd = ::GoogleRewardedAdBuilder.from(AdUnit.rewarded)
         googleInterAd = ::GoogleInterstitialAdBuilder.from(AdUnit.interstitial)
         googleAppOpen = ::GoogleAppOpenAdBuilder.from(AdUnit.appOpen)
         googleNativeAd = ::GoogleNativeAdBuilder.from(AdUnit.native)
     }
 
-    private fun <T> ((Context, String) -> AdBuilder<T>).from(unit: AdUnit) = GoogleAd(
-        this(context, unit.resolve(debug)).withAnalytics()
+    private fun <T> ((Context, String, Analytics) -> AdBuilder<T>).from(unit: AdUnit) = GoogleAd(
+        this(context, unit.resolve(debug), analytics).withAnalytics()
     )
 
     private fun <T> AdBuilder<T>.withAnalytics() = apply {
         onPaid {
-
+            analytics.logEvent(
+                AnalyticsEvent.AdPaidEvent(
+                    event = "AdPaid",
+                    provider = platform,
+                    value = (it.valueMicros / 1000000.0).toString()
+                )
+            )
         }
     }
 

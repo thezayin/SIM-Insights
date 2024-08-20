@@ -6,8 +6,9 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
 import com.thezayin.ads.AdBuilder
 import com.thezayin.ads.AdStatus
+import com.thezayin.analytics.analytics.Analytics
 
-class GoogleAppOpenAdBuilder(private val context: Context, private val id: String) :
+class GoogleAppOpenAdBuilder(private val context: Context, private val id: String, private val analytics: Analytics) :
     AdBuilder<AppOpenAd>() {
     override val platform: String = "AdMob_AppOpen"
     override fun invoke(onAssign: (AdStatus<AppOpenAd>) -> Unit) {

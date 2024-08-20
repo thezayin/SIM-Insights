@@ -9,7 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 dependencyResolutionManagement {
@@ -17,14 +17,28 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
-rootProject.name = "Pak Sim Data"
+rootProject.name = "Sim Insights"
 include(":app")
 include(":ads")
-include(":core")
-include(":framework")
-include(":neumorphic")
 include(":analytics")
+include(":splash:presentation")
+include(":core:di")
+include(":core:drawable")
+include(":core:font")
+include(":core:values")
+include(":core:common")
+include(":core:framework")
+include(":home")
+include(":result:domain")
+include(":result:data")
+include(":result:presentation")
+include(":server:data")
+include(":server:domain")
+include(":server:presentation")
+include(":web")
+include(":setting")
+include(":premium")
