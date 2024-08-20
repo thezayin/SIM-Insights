@@ -7,8 +7,9 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.thezayin.ads.AdBuilder
 import com.thezayin.ads.AdStatus
+import com.thezayin.analytics.analytics.Analytics
 
-class GoogleInterstitialAdBuilder(private val context: Context, private val id: String) :
+class GoogleInterstitialAdBuilder(private val context: Context, private val id: String,private val analytics: Analytics) :
     AdBuilder<InterstitialAd>() {
     override val platform: String = "AdMob_Interstitial"
     override fun invoke(onAssign: (AdStatus<InterstitialAd>) -> Unit) {

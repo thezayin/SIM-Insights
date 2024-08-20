@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
-    namespace = "com.thezayin.neumorphic"
-    compileSdk = 34
+    namespace = "com.thezayin.common.neumorphic"
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -33,14 +34,13 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
 }
 
 dependencies {
-    implementation(project(":core"))
 
+    implementation(project(":core:drawable"))
+    implementation(project(":core:font"))
+    implementation(project(":core:values"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

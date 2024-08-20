@@ -7,10 +7,12 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.thezayin.ads.AdBuilder
 import com.thezayin.ads.AdStatus
+import com.thezayin.analytics.analytics.Analytics
 
 class GoogleRewardedAdBuilder(
     private val context: Context,
     private val id: String,
+    private val analytics: Analytics
 ) :
     AdBuilder<RewardedAd>() {
     override val platform: String = "AdMob_Rewarded"

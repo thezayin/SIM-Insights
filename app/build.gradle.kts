@@ -2,7 +2,8 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.serialization.json)
-    id("com.google.devtools.ksp") version "1.9.22-1.0.17"
+    alias(libs.plugins.compose.compiler)
+    id("com.google.devtools.ksp") version "2.0.10-1.0.24"
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
@@ -12,14 +13,14 @@ plugins {
 
 android {
     namespace = "com.thezayin.paksimdata"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.thezayin.paksimdata"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 4
-        versionName = "1.0.4"
+        targetSdk = 35
+        versionCode = 6
+        versionName = "1.0.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -47,9 +48,6 @@ android {
         compose = true
         dataBinding = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8"
-    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -59,10 +57,23 @@ android {
 
 dependencies {
     implementation(project(":ads"))
-    implementation(project(":core"))
-    implementation(project(":framework"))
-    implementation(project(":neumorphic"))
     implementation(project(":analytics"))
+
+    implementation(project(":core:di"))
+    implementation(project(":core:font"))
+    implementation(project(":core:common"))
+    implementation(project(":core:values"))
+    implementation(project(":core:drawable"))
+    implementation(project(":core:framework"))
+
+    implementation(project(":home"))
+    implementation(project(":web"))
+    implementation(project(":setting"))
+    implementation(project(":premium"))
+
+    implementation(project(":result:presentation"))
+    implementation(project(":splash:presentation"))
+    implementation(project(":server:presentation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -72,6 +83,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,10 +96,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.common.java8)
-
-//neu morphic
-    implementation(libs.neumorphic)
-
 
     //koin dependency injection
     implementation(libs.koin.core)
@@ -102,9 +110,8 @@ dependencies {
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.serialize)
 
-    //Custom Navigation
-    implementation(libs.raamcosta.destination.core)
-    ksp(libs.raamcosta.destination.ksp)
+    //navigation
+    implementation(libs.androidx.navigation.compose)
 
     //lottie anim
     implementation(libs.lottie.compose)
