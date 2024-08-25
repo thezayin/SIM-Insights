@@ -38,12 +38,6 @@ android {
             )
         }
     }
-    splits {
-        abi {
-            isEnable = true
-            isUniversalApk = false
-        }
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
