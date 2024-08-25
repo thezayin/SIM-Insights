@@ -15,7 +15,6 @@ kotlinxSerializationJson = "1.7.1"
 ktorClientCio = "2.3.12"
 ktorSerializationKotlinxJson = "2.3.12"
 ktorServerContentNegotiation = "2.3.12"
-lottieCompose = "6.5.0"
 orgSerlize = "2.0.10"
 lifecycle = "2.8.4"
 activityCompose = "1.9.1"
@@ -100,7 +99,6 @@ firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging
 firebase-inappmessaging-display = { group = "com.google.firebase", name = "firebase-inappmessaging-display", version.ref = "firebaseInappmessagingDisplay" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config", version.ref = "firebaseConfig" }
 
-lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
@@ -110,7 +108,6 @@ play-services-ads = { module = "com.google.android.gms:play-services-ads", versi
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workRuntime" }
 play-services-measurement-api = { group = "com.google.android.gms", name = "play-services-measurement-api", version.ref = "playServicesMeasurementApi" }
 sdp-compose = { module = "com.github.Kaaveh:sdp-compose", version.ref = "sdpCompose" }
-
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

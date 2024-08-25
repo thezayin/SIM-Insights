@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-dontwarn com.thezayin.ads.GoogleManager
+-dontwarn com.thezayin.analytics.analytics.Analytics
+-dontwarn com.thezayin.di.AppModuleKt
+-dontwarn com.thezayin.framework.extension.ads.ShowAppOpenAdKt
+-dontwarn com.thezayin.framework.remote.AdConfigs
+-dontwarn com.thezayin.framework.remote.RemoteConfig
+-dontwarn com.thezayin.home.HomeScreenKt
+-dontwarn com.thezayin.premium.PremiumScreenKt
+-dontwarn com.thezayin.presentation.ResultScreenKt
+-dontwarn com.thezayin.presentation.ServerScreenKt
+-dontwarn com.thezayin.presentation.SplashScreenKt
+-dontwarn com.thezayin.setting.SettingScreenKt
+-dontwarn com.thezayin.web.WebScreenKt

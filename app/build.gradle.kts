@@ -30,11 +30,18 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+    }
+    splits {
+        abi {
+            isEnable = true
+            isUniversalApk = false
         }
     }
     compileOptions {
@@ -112,11 +119,6 @@ dependencies {
 
     //navigation
     implementation(libs.androidx.navigation.compose)
-
-    //lottie anim
-    implementation(libs.lottie.compose)
-    implementation(libs.androidx.animation)
-    implementation(libs.accompanist.navigation.animation)
 
     //firebase
     implementation(libs.firebase.analytics)
