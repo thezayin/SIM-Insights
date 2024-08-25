@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.thezayin.web.component
 
 import android.graphics.Bitmap

@@ -147,13 +147,13 @@ fun ShadeWaveProgress(
                 )  //Move to the initial point
                 var i = -waveWidthBelow
                 while (i < widthPx + waveWidthBelow) { //Draw the path of a wave in a loop
-                    belowPath.relativeQuadraticBezierTo(
+                    belowPath.relativeQuadraticTo(
                         waveWidthBelow / 4f,
                         -waveHeight,
                         waveWidthBelow / 2f,
                         0f
                     )
-                    belowPath.relativeQuadraticBezierTo(
+                    belowPath.relativeQuadraticTo(
                         waveWidthBelow / 4f,
                         waveHeight,
                         waveWidthBelow / 2f,
@@ -177,13 +177,13 @@ fun ShadeWaveProgress(
                 )  //Move to the initial point
                 var j = -waveWidth
                 while (j < widthPx + waveWidth) {  //Draw the path of a wave in a loop
-                    abovePath.relativeQuadraticBezierTo(
+                    abovePath.relativeQuadraticTo(
                         waveWidth / 4f,
                         -waveHeight,
                         waveWidth / 2f,
                         0f
                     )
-                    abovePath.relativeQuadraticBezierTo(
+                    abovePath.relativeQuadraticTo(
                         waveWidth / 4f,
                         waveHeight,
                         waveWidth / 2f,
