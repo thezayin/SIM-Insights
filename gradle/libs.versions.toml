@@ -18,12 +18,12 @@ ktorServerContentNegotiation = "2.3.12"
 orgSerlize = "2.0.10"
 lifecycle = "2.8.4"
 activityCompose = "1.9.1"
-composeBom = "2024.06.00"
+composeBom = "2024.08.00"
 ktor = "2.3.12"
 sdpCompose = "1.1.0"
 ktorSerialize = "2.3.12"
 googleServicesVersion = "4.4.2"
-firebaseAnalytics = "22.0.2"
+firebaseAnalytics = "22.1.0"
 firebaseCrashlytics = "19.0.3"
 firebaseCrashlyticsGradle = "3.0.2"
 firebasePerf = "21.0.1"
@@ -87,7 +87,6 @@ ktor-client-serialize = { module = "io.ktor:ktor-client-serialization", version.
 
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 ktor-server-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktorServerContentNegotiation" }
-opencv-contrib = { module = "com.quickbirdstudios:opencv-contrib", version.ref = "opencvContrib" }
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServicesVersion" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
