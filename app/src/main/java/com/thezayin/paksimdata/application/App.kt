@@ -14,23 +14,26 @@ import com.thezayin.di.webModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(this@App)
-            modules(adModule)
-            modules(webModule)
-            modules(appModule)
-            modules(homeModule)
-            modules(splashModule)
-            modules(resultModule)
-            modules(serverModule)
-            modules(settingModule)
-            modules(premiumModule)
-            modules(analyticsModule)
+            modules(
+                adModule,
+                webModule,
+                appModule,
+                homeModule,
+                splashModule,
+                resultModule,
+                serverModule,
+                settingModule,
+                premiumModule,
+                analyticsModule
+            )
         }
     }
 }

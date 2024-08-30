@@ -23,7 +23,6 @@ import com.thezayin.presentation.SplashViewModel
 import com.thezayin.setting.SettingViewModel
 import com.thezayin.web.WebViewModel
 import kotlinx.serialization.json.Json
-import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -36,12 +35,12 @@ val appModule = module {
 }
 
 val adModule = module {
-    single { ConsentManager(androidContext()) }
-    single { GoogleManager(androidContext(), get(), get()) }
+    single { ConsentManager(get()) }
+    single { GoogleManager(get(), get(), get()) }
 }
 
 val analyticsModule = module {
-    single { FirebaseAnalytics.getInstance(androidContext()) }
+    single { FirebaseAnalytics.getInstance(get()) }
     factoryOf(::AnalyticsImpl) bind Analytics::class
 }
 
@@ -76,5 +75,4 @@ val settingModule = module {
 
 val premiumModule = module {
     viewModelOf(::PremiumViewModel)
-
 }

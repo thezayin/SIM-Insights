@@ -32,3 +32,8 @@
 -dontwarn com.thezayin.presentation.SplashScreenKt
 -dontwarn com.thezayin.setting.SettingScreenKt
 -dontwarn com.thezayin.web.WebScreenKt
+
+-keepclassmembers class * {
+    public <init>(...);
+}
+-keep class com.thezayin.di.** { *; }
