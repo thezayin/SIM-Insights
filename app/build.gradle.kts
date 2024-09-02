@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.serialization.json)
     alias(libs.plugins.compose.compiler)
-    id("com.google.devtools.ksp") version "2.0.10-1.0.24"
+    alias(libs.plugins.ksp)
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.firebase-perf")
@@ -13,12 +13,12 @@ plugins {
 
 android {
     namespace = "com.thezayin.paksimdata"
-    compileSdk = 35
+    compileSdk =  libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
         applicationId = "com.thezayin.paksimdata"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = libs.versions.minSdkVersion.get().toInt()
+        targetSdk = libs.versions.targetSdkVersion.get().toInt()
         versionCode = 7
         versionName = "1.0.7"
 
@@ -26,6 +26,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        multiDexEnabled =  true
     }
 
     buildTypes {
@@ -124,4 +125,6 @@ dependencies {
     implementation(libs.jsoup.jsoup)
 
     implementation(libs.timber)
+
+    implementation ("androidx.multidex:multidex:2.0.1")
 }
