@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.thezayin.drawable"
-    compileSdk = 34
+    compileSdk =  libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdkVersion.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

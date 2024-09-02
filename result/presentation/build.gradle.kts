@@ -6,10 +6,10 @@ plugins {
 
 android {
     namespace = "com.thezayin.presentation"
-    compileSdk = 35
+    compileSdk =  libs.versions.compileSdkVersion.get().toInt()
 
     defaultConfig {
-        minSdk = 24
+        minSdk = libs.versions.minSdkVersion.get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

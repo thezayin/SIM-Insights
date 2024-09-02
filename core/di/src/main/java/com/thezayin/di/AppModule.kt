@@ -29,7 +29,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val appModule = module {
+val featureModule = module {
     single { Json { ignoreUnknownKeys = true } }
     single { RemoteConfig(get()) }
 }

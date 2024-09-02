@@ -3,7 +3,7 @@ package com.thezayin.paksimdata.application
 import android.app.Application
 import com.thezayin.di.adModule
 import com.thezayin.di.analyticsModule
-import com.thezayin.di.appModule
+import com.thezayin.di.featureModule
 import com.thezayin.di.homeModule
 import com.thezayin.di.premiumModule
 import com.thezayin.di.resultModule
@@ -25,7 +25,7 @@ class App : Application() {
             modules(
                 adModule,
                 webModule,
-                appModule,
+                featureModule,
                 homeModule,
                 splashModule,
                 resultModule,
