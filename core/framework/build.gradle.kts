@@ -1,10 +1,11 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.serialization.json)
+    alias(libs.plugins.compose.compiler)
     id("kotlin-kapt")
     id("kotlinx-serialization")
     id("kotlin-parcelize")
-    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -72,12 +73,22 @@ dependencies {
     implementation(libs.firebase.inappmessaging.display)
     implementation(libs.firebase.config)
 
-
     //serialization and ktor
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.ktor.client.android)
     implementation(libs.ktor.client.logging)
     implementation(libs.ktor.client.serialize)
+
+    //koin dependency injection
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.android)
+    testImplementation(libs.koin.test.junit4)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.sdp.compose)
+
+    //json
+    implementation(libs.kotlinx.serialization.json)
 
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.cardview:cardview:1.0.0")

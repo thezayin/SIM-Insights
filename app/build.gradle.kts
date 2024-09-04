@@ -61,7 +61,6 @@ dependencies {
     implementation(project(":ads"))
     implementation(project(":analytics"))
 
-    implementation(project(":core:di"))
     implementation(project(":core:font"))
     implementation(project(":core:common"))
     implementation(project(":core:values"))
