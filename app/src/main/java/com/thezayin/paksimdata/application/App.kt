@@ -1,16 +1,16 @@
 package com.thezayin.paksimdata.application
 
 import android.app.Application
-import com.thezayin.di.adModule
-import com.thezayin.di.analyticsModule
-import com.thezayin.di.featureModule
-import com.thezayin.di.homeModule
-import com.thezayin.di.premiumModule
-import com.thezayin.di.resultModule
-import com.thezayin.di.serverModule
-import com.thezayin.di.settingModule
-import com.thezayin.di.splashModule
-import com.thezayin.di.webModule
+import com.thezayin.ads.di.adModule
+import com.thezayin.analytics.di.analyticsModule
+import com.thezayin.framework.di.featureModule
+import com.thezayin.home.di.homeModule
+import com.thezayin.premium.di.premiumModule
+import com.thezayin.presentation.di.resultModule
+import com.thezayin.presentation.di.serverModule
+import com.thezayin.presentation.di.splashModule
+import com.thezayin.setting.di.settingModule
+import com.thezayin.web.di.webModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

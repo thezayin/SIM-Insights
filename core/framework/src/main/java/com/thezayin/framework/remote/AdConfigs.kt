@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AdConfigs(
+    @SerialName("init_ads") val initAds: Boolean = true,
     @SerialName("appOpenAd") val appOpenAd: Boolean = true,
     @SerialName("adOnSplashScreen") val adOnSplashScreen: Boolean = true,
     @SerialName("adOnPremiumClick") val adOnPremiumClick: Boolean = true,
@@ -26,6 +27,7 @@ data class AdConfigs(
 
 val defaultAdConfigs = """
    {
+   "init_ads": true,
    "appOpenAd": true,
    "adOnSplashScreen": true,
    "adOnPremiumClick": true,

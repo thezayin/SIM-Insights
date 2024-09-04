@@ -29,50 +29,13 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-val featureModule = module {
-    single { Json { ignoreUnknownKeys = true } }
-    single { RemoteConfig(get()) }
-}
 
-val adModule = module {
-    single { ConsentManager(get()) }
-    single { GoogleManager(get(), get(), get()) }
-}
 
-val analyticsModule = module {
-    single { FirebaseAnalytics.getInstance(get()) }
-    factoryOf(::AnalyticsImpl) bind Analytics::class
-}
 
-val splashModule = module {
-    viewModelOf(::SplashViewModel)
-}
 
-val homeModule = module {
-    viewModelOf(::HomeViewModel)
-}
 
-val resultModule = module {
-    singleOf(::ResultApi)
-    viewModelOf(::ResultViewModel)
-    singleOf(::GetResultImpl) bind GetResult::class
-    singleOf(::ResultRepositoryImpl) bind ResultRepository::class
-}
 
-val serverModule = module {
-    viewModelOf(::ServerViewModel)
-    singleOf(::ServerListImpl) bind ServerList::class
-    singleOf(::ServerRepositoryImpl) bind ServerRepository::class
-}
 
-val webModule = module {
-    viewModelOf(::WebViewModel)
-}
 
-val settingModule = module {
-    viewModelOf(::SettingViewModel)
-}
 
-val premiumModule = module {
-    viewModelOf(::PremiumViewModel)
-}
+

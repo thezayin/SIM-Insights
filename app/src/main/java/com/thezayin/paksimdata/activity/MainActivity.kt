@@ -15,18 +15,19 @@ import com.thezayin.paksimdata.theme.PakSimDataTheme
 import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
-
     private val googleManager: GoogleManager by inject()
     private val remoteConfig: RemoteConfig by inject()
     private val analytics: Analytics by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseMessaging.getInstance().subscribeToTopic(Constants.TOPIC)
-        googleManager.init(this)
-        googleManager.initOnLastConsent()
+        if (remoteConfig.adConfigs.initAds) {
+            googleManager.init(this)
+            googleManager.initOnLastConsent()
+        }
         setContent {
-            val navController = rememberNavController()
             PakSimDataTheme {
+                val navController = rememberNavController()
                 NavHost(navController = navController)
             }
         }

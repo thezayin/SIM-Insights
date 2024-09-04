@@ -40,10 +40,8 @@ class RemoteConfig(
     val serverList: ServerUrl
         get() = try {
             val serverListJson = config.getString(SERVER_LIST)
-            Log.d("RemoteConfig", "ServerList JSON: $serverListJson")
             json.decodeFromString(ServerUrl.serializer(), serverListJson)
         } catch (e: Exception) {
-            Log.e("RemoteConfig", "Error decoding ServerList JSON", e)
             json.decodeFromString(ServerUrl.serializer(), defaultServerUrl)  // Fallback to default
         }
 

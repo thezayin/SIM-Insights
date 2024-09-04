@@ -55,4 +55,11 @@ dependencies {
     api(libs.play.services.ads)
 
     implementation(libs.timber)
+
+    //koin dependency injection
+    implementation(libs.koin.core)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.android)
+    testImplementation(libs.koin.test.junit4)
+    implementation(libs.koin.androidx.navigation)
 }
