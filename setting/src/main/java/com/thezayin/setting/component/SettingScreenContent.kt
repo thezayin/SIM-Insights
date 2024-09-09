@@ -24,6 +24,7 @@ fun SettingScreenContent(
     onPremiumClick: () -> Unit,
     showAd: Boolean?,
     nativeAd: NativeAd?,
+    showPremium: Boolean,
 ) {
     Scaffold(
         modifier = modifier
@@ -34,6 +35,7 @@ fun SettingScreenContent(
         topBar = {
             SettingTopBar(
                 modifier = Modifier,
+                showPremium = showPremium,
                 onBackPress = onBackClick,
                 onPremiumPress = onPremiumClick
             )

@@ -24,6 +24,7 @@ import com.thezayin.common.neumorphic.widgets.ShadeCard
 @Composable
 fun SettingTopBar(
     modifier: Modifier,
+    showPremium: Boolean,
     onBackPress: () -> Unit,
     onPremiumPress: () -> Unit
 ) {
@@ -58,20 +59,22 @@ fun SettingTopBar(
             fontFamily = FontFamily(Font(com.thezayin.font.R.font.abeezee_italic)),
         )
 
-        ShadeCard(
-            onClick = {
-                onPremiumPress()
-            },
-            cornerRadius = 40.dp,
-            modifier = Modifier.size(40.dp)
-        ) {
-            Image(
-                painter = painterResource(id = com.thezayin.drawable.R.drawable.ic_crown),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(40.dp)
-                    .padding(10.dp),
-            )
+        if (showPremium) {
+            ShadeCard(
+                onClick = {
+                    onPremiumPress()
+                },
+                cornerRadius = 40.dp,
+                modifier = Modifier.size(40.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = com.thezayin.drawable.R.drawable.ic_crown),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(40.dp)
+                        .padding(10.dp),
+                )
+            }
         }
     }
 }

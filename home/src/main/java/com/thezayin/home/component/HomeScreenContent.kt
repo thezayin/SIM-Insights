@@ -21,12 +21,14 @@ import com.thezayin.framework.nativead.GoogleNativeAdStyle
 @Composable
 fun HomeScreenContent(
     modifier: Modifier,
+    showPremium: Boolean,
     onPremiumClick: () -> Unit,
     onMenuClick: () -> Unit,
     onServerClick: () -> Unit,
     onSearchClick: (String) -> Unit,
     nativeAd: NativeAd?,
     showNativeAd: Boolean?,
+    showServerList: Boolean,
 ) {
     val number = remember { mutableStateOf(TextFieldValue()) }
     val showWarning = remember { mutableStateOf(false) }
@@ -38,27 +40,29 @@ fun HomeScreenContent(
         topBar = {
             TopBar(
                 modifier = Modifier,
+                showPremium = showPremium,
                 onMenuClick = onMenuClick,
                 onPremiumClick = onPremiumClick
             )
         },
         bottomBar = {
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                BottomBar(
-                    modifier = Modifier,
-                    onServerClick = onServerClick
-                )
-                if(showNativeAd==true) {
-                    GoogleNativeAd(
+            if (showServerList) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    BottomBar(
                         modifier = Modifier,
-                        style = GoogleNativeAdStyle.Small,
-                        nativeAd = nativeAd
+                        onServerClick = onServerClick
                     )
+                    if (showNativeAd == true) {
+                        GoogleNativeAd(
+                            modifier = Modifier,
+                            style = GoogleNativeAdStyle.Small,
+                            nativeAd = nativeAd
+                        )
+                    }
                 }
             }
-
         }
     ) { paddingValues ->
         Box(

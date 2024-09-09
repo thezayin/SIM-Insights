@@ -5,6 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AdConfigs(
+    @SerialName("showPremium") val showPremium: Boolean = false,
     @SerialName("init_ads") val initAds: Boolean = false,
     @SerialName("appOpenAd") val appOpenAd: Boolean = false,
     @SerialName("adOnSplashScreen") val adOnSplashScreen: Boolean = false,
@@ -22,12 +23,14 @@ data class AdConfigs(
     @SerialName("nativeAdOnServerLoadingDialog") val nativeAdOnServerLoadingDialog: Boolean = false,
     @SerialName("nativeAdOnWebScreen") val nativeAdOnWebScreen: Boolean = false,
     @SerialName("nativeAdOnWebLoadingDialog") val nativeAdOnWebLoadingDialog: Boolean = false,
-    @SerialName("nativeAdOnPremiumScreen") val nativeAdOnPremiumScreen: Boolean = false
+    @SerialName("nativeAdOnPremiumScreen") val nativeAdOnPremiumScreen: Boolean = false,
+    @SerialName("showServerList") val showServerList: Boolean = false
 )
 
 val defaultAdConfigs = """
    {
    "init_ads": false,
+   "showPremium": false,
    "appOpenAd": false,
    "adOnSplashScreen": false,
    "adOnPremiumClick": false,
@@ -44,6 +47,7 @@ val defaultAdConfigs = """
    "nativeAdOnServerLoadingDialog": false,
    "nativeAdOnWebScreen": false,
    "nativeAdOnWebLoadingDialog": false,
-   "nativeAdOnPremiumScreen": false
+   "nativeAdOnPremiumScreen": false,
+   "showServerList": false
 }
 """.trimIndent()

@@ -32,6 +32,8 @@ fun HomeScreen(
     val showNativeAd =
         remember { mutableStateOf(viewModel.remoteConfig.adConfigs.nativeAdOnHomeScreen) }
 
+    val showServerList = remember { viewModel.remoteConfig.adConfigs.showServerList }
+
     ComposableLifecycle { _, event ->
         when (event) {
             Lifecycle.Event.ON_START -> {
@@ -54,6 +56,8 @@ fun HomeScreen(
         modifier = Modifier,
         nativeAd = nativeAd.value,
         showNativeAd = showNativeAd.value,
+        showPremium = viewModel.remoteConfig.adConfigs.showPremium,
+        showServerList = showServerList,
         onPremiumClick = {
             activity.interstitialAd(
                 scope = scope,

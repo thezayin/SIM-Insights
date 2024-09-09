@@ -52,12 +52,8 @@ fun ResultScreen(phoneNumber: String, onBackPress: () -> Unit, onPremiumClick: (
         }
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.searchNumber(phoneNumber)
-    }
-
+    LaunchedEffect(Unit) { viewModel.searchNumber(phoneNumber) }
     viewModel.analytics.logEvent(AnalyticsEvent.ScreenViewEvent("ResultScreen"))
-
     if (state.loading) {
         LoadingDialog(
             showAd = showLoadingAd.value,
@@ -79,32 +75,29 @@ fun ResultScreen(phoneNumber: String, onBackPress: () -> Unit, onPremiumClick: (
             callback = { onBackPress() })
     }
 
-    state.result?.let { result ->
-        ScreenContent(
-            modifier = Modifier,
-            showBottomAd = showBottomAd.value,
-            nativeAd = nativeAd.value,
-            onBackClick = {
-                activity.interstitialAd(
-                    scope = scope,
-                    googleManager = viewModel.googleManager,
-                    analytics = viewModel.analytics,
-                    showAd = viewModel.remoteConfig.adConfigs.adOnBackPress
-                ) {
-                    onBackPress()
-                }
-            },
-            onPremiumClick = {
-                activity.interstitialAd(
-                    scope = scope,
-                    googleManager = viewModel.googleManager,
-                    analytics = viewModel.analytics,
-                    showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick
-                ) {
-                    onPremiumClick()
-                }
-            },
-            result = result
-        )
-    }
+    ScreenContent(
+        modifier = Modifier,
+        result = state.result,
+        nativeAd = nativeAd.value,
+        showBottomAd = showBottomAd.value,
+        resultNotFound = state.resultNotFound,
+        onBackClick = {
+            activity.interstitialAd(
+                scope = scope,
+                googleManager = viewModel.googleManager,
+                analytics = viewModel.analytics,
+                showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                callBack = { onBackPress() }
+            )
+        },
+        onPremiumClick = {
+            activity.interstitialAd(
+                scope = scope,
+                googleManager = viewModel.googleManager,
+                analytics = viewModel.analytics,
+                showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick,
+                callBack = { onPremiumClick() }
+            )
+        },
+    )
 }
