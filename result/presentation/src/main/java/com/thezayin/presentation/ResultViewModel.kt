@@ -15,6 +15,7 @@ import com.thezayin.presentation.state.ResultState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
@@ -43,6 +44,14 @@ class ResultViewModel(
 
     private fun resultUiEvent(event: ResultUiEvents) {
         when (event) {
+            is ResultUiEvents.ShowResultNotFound -> {
+                _resultUiState.update {
+                    it.copy(
+                        resultNotFound = event.boolean
+                    )
+                }
+            }
+
             is ResultUiEvents.ErrorMessage -> {
                 _resultUiState.update {
                     it.copy(
@@ -94,43 +103,59 @@ class ResultViewModel(
     }
 
     fun searchNumber(phoneNumber: String) = viewModelScope.launch {
-        getResult(phoneNumber).collect { response ->
-            when (response) {
-                is Response.Success -> {
-                    delay(2000L)
-                    val doc: Document = Jsoup.parse(response.data)
-                    val table = doc.select("table")
-                    val rows = table.select("tr")
-                    for (row in rows) {
-                        val cols = row.select("td")
-                        for (col in cols) {
-                            resultSuccess(
-                                ResultModel(
+        getResult(phoneNumber)
+            .catch { e ->
+                // Handle the exception here
+                errorMessages(e.localizedMessage ?: "An error occurred")
+                showErrorDialog()
+                setResultNull()
+                resultNotFound(true)
+                hideLoading()
+            }
+            .collect { response ->
+                when (response) {
+                    is Response.Success -> {
+                        setResultNull()
+                        setResultNotFound()
+                        delay(2000L)
+                        val doc: Document = Jsoup.parse(response.data)
+
+                        val notFoundMessage = doc.select("h4").firstOrNull()?.text()
+                        if (notFoundMessage?.contains("Records Not Found") == true) {
+                            // If the message is found, update the state to show the "no result" UI
+                            resultNotFound(false)
+                            hideLoading()
+                            return@collect
+                        }
+                        val table = doc.select("table")
+                        val rows = table.select("tr")
+                        for (row in rows) {
+                            val cols = row.select("td")
+                            for (col in cols) {
+                                val result = ResultModel(
                                     number = cols[0].text(),
                                     name = cols[1].text(),
                                     cnic = cols[2].text(),
                                     address = cols[3].text()
                                 )
-                            )
-
+                                resultSuccess(result)
+                            }
                         }
+                        hideLoading()
                     }
-                    hideLoading()
-                }
 
-                is Response.Error -> {
-                    errorMessages(response.e)
-                    showErrorDialog()
-                    hideLoading()
-                }
+                    is Response.Error -> {
+                        errorMessages(response.e)
+                        showErrorDialog()
+                        hideLoading()
+                    }
 
-                is Response.Loading -> {
-                    showLoading()
+                    is Response.Loading -> {
+                        showLoading()
+                    }
                 }
             }
-        }
     }
-
 
     private fun resultSuccess(resultModel: ResultModel) {
         resultUiEvent(ResultUiEvents.ResultSuccess(resultModel))
@@ -154,5 +179,16 @@ class ResultViewModel(
 
     private fun showLoading() {
         resultUiEvent(ResultUiEvents.ShowLoading)
+    }
+
+    private fun setResultNotFound() {
+        resultUiEvent(ResultUiEvents.ShowResultNotFound(null))
+    }
+
+    private fun setResultNull() {
+        resultUiEvent(ResultUiEvents.ResultSuccess(null))
+    }
+    private fun resultNotFound(boolean: Boolean) {
+        resultUiEvent(ResultUiEvents.ShowResultNotFound(boolean))
     }
 }

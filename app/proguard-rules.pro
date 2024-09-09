@@ -36,5 +36,3 @@
 -keepclassmembers class * {
     public <init>(...);
 }
-
--keep class com.thezayin.di.** { *; }

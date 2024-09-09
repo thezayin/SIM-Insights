@@ -19,12 +19,14 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 fun ScreenContent(
     modifier: Modifier,
+    nativeAd: NativeAd?,
+    result: ResultModel?,
+    showBottomAd: Boolean?,
+    resultNotFound: Boolean?,
     onBackClick: () -> Unit,
     onPremiumClick: () -> Unit,
-    result: ResultModel,
-    nativeAd: NativeAd?,
-    showBottomAd: Boolean?
-) {
+
+    ) {
     Scaffold(modifier = modifier
         .navigationBarsPadding()
         .statusBarsPadding()
@@ -36,7 +38,7 @@ fun ScreenContent(
             )
         },
         bottomBar = {
-            if (showBottomAd==true) {
+            if (showBottomAd == true) {
                 GoogleNativeAd(
                     modifier = Modifier,
                     style = GoogleNativeAdStyle.Small,
@@ -50,13 +52,18 @@ fun ScreenContent(
                 .fillMaxSize()
                 .padding(vertical = 35.sdp, horizontal = 10.sdp)
         ) {
-            ResultContent(
-                modifier = Modifier,
-                name = result.name,
-                cnic = result.cnic,
-                address = result.address,
-                number = result.number
-            )
+            result?.let { result ->
+                ResultContent(
+                    modifier = Modifier,
+                    name = result.name,
+                    cnic = result.cnic,
+                    address = result.address,
+                    number = result.number
+                )
+            }
+            resultNotFound?.let {
+                ResultNotFound(modifier = Modifier)
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ sealed interface ResultState : State {
     data class ResultUiState(
         val loading: Boolean = false,
         val result: ResultModel? = null,
+        val resultNotFound: Boolean? = null,
         val errorDialog: Boolean = false,
         val error: String = "",
     )

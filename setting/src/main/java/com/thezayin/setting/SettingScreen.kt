@@ -51,6 +51,7 @@ fun SettingScreen(
         modifier = Modifier,
         showAd = showBottomAd.value,
         nativeAd = nativeAd.value,
+        showPremium = viewModel.remoteConfig.adConfigs.showPremium,
         onBackClick = {
             activity.interstitialAd(
                 scope = scope,
