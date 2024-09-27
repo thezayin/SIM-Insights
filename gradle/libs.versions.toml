@@ -1,6 +1,8 @@
 [versions]
 compileSdkVersion = "35"
+grizzly = "2.1"
 minSdkVersion = "24"
+multidex = "2.0.1"
 targetSdkVersion = "34"
 
 agp = "8.5.2"
@@ -57,8 +59,10 @@ androidx-animation = { module = "androidx.compose.animation:animation", version.
 androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "multidex" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
+grizzly = { module = "io.github.farimarwat:grizzly", version.ref = "grizzly" }
 jsoup-jsoup = { module = "org.jsoup:jsoup", version.ref = "jsoupVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

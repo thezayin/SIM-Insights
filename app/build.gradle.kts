@@ -125,5 +125,6 @@ dependencies {
 
     implementation(libs.timber)
 
-    implementation ("androidx.multidex:multidex:2.0.1")
+    implementation (libs.androidx.multidex)
+    implementation(libs.grizzly)
 }
