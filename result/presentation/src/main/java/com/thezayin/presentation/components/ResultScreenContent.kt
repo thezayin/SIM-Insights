@@ -1,7 +1,9 @@
 package com.thezayin.presentation.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -17,32 +19,43 @@ import com.thezayin.framework.nativead.GoogleNativeAdStyle
 import ir.kaaveh.sdpcompose.sdp
 
 @Composable
-fun ScreenContent(
+fun ResultScreenContent(
     modifier: Modifier,
     nativeAd: NativeAd?,
     result: ResultModel?,
+    showPremium: Boolean,
     showBottomAd: Boolean?,
     resultNotFound: Boolean?,
     onBackClick: () -> Unit,
     onPremiumClick: () -> Unit,
-
-    ) {
+) {
     Scaffold(modifier = modifier
         .navigationBarsPadding()
         .statusBarsPadding()
         .fillMaxSize(),
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
         topBar = {
-            TopBar(
-                modifier = Modifier, onBackClick = onBackClick, onPremiumClick = onPremiumClick
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TopBar(
+                    modifier = Modifier,
+                    onBackClick = onBackClick,
+                    onPremiumClick = onPremiumClick,
+                    showPremium = showPremium,
+                    screenName = "Result"
+                )
+                if (showBottomAd == true) {
+                    GoogleNativeAd(
+                        modifier = Modifier, style = GoogleNativeAdStyle.Small, nativeAd = nativeAd
+                    )
+                }
+            }
         },
         bottomBar = {
             if (showBottomAd == true) {
                 GoogleNativeAd(
-                    modifier = Modifier,
-                    style = GoogleNativeAdStyle.Small,
-                    nativeAd = nativeAd
+                    modifier = Modifier, style = GoogleNativeAdStyle.Small, nativeAd = nativeAd
                 )
             }
         }) { paddingValues ->

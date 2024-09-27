@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":result:presentation"))
     implementation(project(":splash:presentation"))
     implementation(project(":server:presentation"))
+    implementation(project(":recent:presentation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -124,5 +125,6 @@ dependencies {
 
     implementation(libs.timber)
 
-    implementation ("androidx.multidex:multidex:2.0.1")
+    implementation (libs.androidx.multidex)
+    implementation(libs.grizzly)
 }

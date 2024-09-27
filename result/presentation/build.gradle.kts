@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.compose.compiler)
+    id("kotlin-kapt")
 }
 
 android {
@@ -49,6 +50,7 @@ dependencies {
     implementation(project(":core:common"))
 
     implementation(project(":result:domain"))
+    implementation(project(":recent:domain"))
     implementation(project(":result:data"))
     implementation(project(":analytics"))
 

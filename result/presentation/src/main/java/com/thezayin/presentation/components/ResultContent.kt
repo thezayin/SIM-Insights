@@ -46,6 +46,7 @@ fun ResultContent(
                 fontFamily = FontFamily(Font(com.thezayin.font.R.font.abeezee_italic)),
                 color = colorResource(id = com.thezayin.values.R.color.black),
                 fontSize = 16.ssp,
+                
             )
             Text(
                 text = "CNIC:",

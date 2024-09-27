@@ -18,7 +18,7 @@ import com.thezayin.framework.ads.interstitialAd
 import com.thezayin.framework.lifecycles.ComposableLifecycle
 import com.thezayin.framework.nativead.GoogleNativeAd
 import com.thezayin.framework.nativead.GoogleNativeAdStyle
-import com.thezayin.presentation.components.ScreenContent
+import com.thezayin.presentation.components.ResultScreenContent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -75,10 +75,11 @@ fun ResultScreen(phoneNumber: String, onBackPress: () -> Unit, onPremiumClick: (
             callback = { onBackPress() })
     }
 
-    ScreenContent(
+    ResultScreenContent(
         modifier = Modifier,
         result = state.result,
         nativeAd = nativeAd.value,
+        showPremium = viewModel.remoteConfig.adConfigs.showPremium,
         showBottomAd = showBottomAd.value,
         resultNotFound = state.resultNotFound,
         onBackClick = {
@@ -98,6 +99,6 @@ fun ResultScreen(phoneNumber: String, onBackPress: () -> Unit, onPremiumClick: (
                 showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick,
                 callBack = { onPremiumClick() }
             )
-        },
+        }
     )
 }

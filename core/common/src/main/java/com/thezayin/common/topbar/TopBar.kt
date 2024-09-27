@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,10 +22,11 @@ import com.thezayin.common.neumorphic.widgets.ShadeCard
 import ir.kaaveh.sdpcompose.sdp
 import ir.kaaveh.sdpcompose.ssp
 
-@Preview
 @Composable
 fun TopBar(
+    screenName: String,
     modifier: Modifier = Modifier,
+    showPremium: Boolean,
     onBackClick: () -> Unit = {},
     onPremiumClick: () -> Unit = {}
 ) {
@@ -52,27 +54,29 @@ fun TopBar(
             )
         }
         Text(
-            text = "Result",
+            text = screenName,
             color = colorResource(id = com.thezayin.values.R.color.black),
             fontSize = 17.ssp,
             fontFamily = FontFamily(Font(com.thezayin.font.R.font.abeezee_italic)),
         )
 
-
-        ShadeCard(
-            onClick = {
-                onPremiumClick()
-            },
-            cornerRadius = 40.sdp,
-            modifier = Modifier.size(25.sdp)
-        ) {
-            Image(
-                painter = painterResource(id = com.thezayin.drawable.R.drawable.ic_crown),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(25.sdp)
-                    .padding(6.sdp),
-            )
+        Spacer(modifier)
+        if (showPremium) {
+            ShadeCard(
+                onClick = {
+                    onPremiumClick()
+                },
+                cornerRadius = 40.sdp,
+                modifier = Modifier.size(25.sdp)
+            ) {
+                Image(
+                    painter = painterResource(id = com.thezayin.drawable.R.drawable.ic_crown),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(25.sdp)
+                        .padding(6.sdp),
+                )
+            }
         }
     }
 }

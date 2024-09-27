@@ -1,8 +1,11 @@
 package com.thezayin.presentation.di
 
+
 import com.thezayin.data.network.ResultApi
 import com.thezayin.data.repository.ResultRepositoryImpl
 import com.thezayin.domain.repository.ResultRepository
+import com.thezayin.domain.usecase.GetHistory
+import com.thezayin.domain.usecase.GetHistoryImpl
 import com.thezayin.domain.usecase.GetResult
 import com.thezayin.domain.usecase.GetResultImpl
 import com.thezayin.presentation.ResultViewModel
@@ -16,4 +19,5 @@ val resultModule = module {
     viewModelOf(::ResultViewModel)
     singleOf(::GetResultImpl) bind GetResult::class
     singleOf(::ResultRepositoryImpl) bind ResultRepository::class
+    singleOf(::GetHistoryImpl) bind GetHistory::class
 }

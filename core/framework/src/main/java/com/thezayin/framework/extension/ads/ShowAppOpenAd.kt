@@ -1,6 +1,7 @@
 package com.thezayin.framework.extension.ads
 
 import android.app.Activity
+import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.appopen.AppOpenAd
@@ -17,6 +18,7 @@ fun Activity.showAppOpenAd(
 
     if (!showAd) {
         callBack()
+        Log.d("jejeShowAppOpenAd", "showAd: $showAd")
         return null
     }
 
@@ -39,10 +41,14 @@ fun Activity.showAppOpenAd(
 
             override fun onAdFailedToShowFullScreenContent(p0: AdError) {
                 super.onAdFailedToShowFullScreenContent(p0)
+                Log.d("jejeShowAppOpenAd", "onAdFailedToShowFullScreenContent: ${p0.message}")
                 callBack.invoke()
             }
         }
         ad.show(this)
-    } ?: callBack.invoke()
+    } ?: {
+        Log.d("jejeShowAppOpenAd", "ad is null")
+        callBack.invoke()
+    }
     return ad
 }

@@ -22,3 +22,6 @@ object SettingScreenNav
 
 @Serializable
 object PremiumScreenNav
+
+@Serializable
+object HistoryScreenNav

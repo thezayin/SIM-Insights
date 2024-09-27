@@ -83,8 +83,10 @@ fun WebScreen(
             callback = { onBackPress() })
     }
 
-    WebScreenContent(modifier = Modifier,
+    WebScreenContent(
+        modifier = Modifier,
         url = url,
+        showPremium = viewModel.remoteConfig.adConfigs.showPremium,
         showBottomAd = showBottomAd.value,
         nativeAd = nativeAd,
         backEnabled = backEnabled,

@@ -1,5 +1,6 @@
 package com.thezayin.data.repository
 
+import android.util.Log
 import com.thezayin.data.network.ResultApi
 import com.thezayin.domain.repository.ResultRepository
 import com.thezayin.framework.utils.Response
@@ -14,7 +15,7 @@ class ResultRepositoryImpl(private val api: ResultApi) : ResultRepository {
             emit(Response.Success(response))
 
         } catch (e: Exception) {
-
+            emit(Response.Error(e.localizedMessage?: "An unexpected error occurred!"))
         }
     }
 }

@@ -20,6 +20,10 @@
             <option value="$PROJECT_DIR$/core/values" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/premium" />
+            <option value="$PROJECT_DIR$/recent" />
+            <option value="$PROJECT_DIR$/recent/data" />
+            <option value="$PROJECT_DIR$/recent/domain" />
+            <option value="$PROJECT_DIR$/recent/presentation" />
             <option value="$PROJECT_DIR$/result" />
             <option value="$PROJECT_DIR$/result/data" />
             <option value="$PROJECT_DIR$/result/domain" />

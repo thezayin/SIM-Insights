@@ -1,7 +1,9 @@
 package com.thezayin.presentation.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -21,6 +23,7 @@ import ir.kaaveh.sdpcompose.sdp
 fun ServerScreenContent(
     modifier: Modifier,
     onBackClick: () -> Unit,
+    showPremium: Boolean,
     onPremiumClick: () -> Unit,
     onServerClick: (String) -> Unit,
     list: List<ServerModel>,
@@ -33,16 +36,27 @@ fun ServerScreenContent(
         .fillMaxSize(),
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
         topBar = {
-            TopBar(
-                modifier = Modifier, onBackClick = onBackClick, onPremiumClick = onPremiumClick
-            )
+            Column(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                TopBar(
+                    screenName = "Servers",
+                    modifier = Modifier,
+                    onBackClick = onBackClick,
+                    onPremiumClick = onPremiumClick,
+                    showPremium = showPremium
+                )
+                if (showBottomAd.value) {
+                    GoogleNativeAd(
+                        modifier = Modifier, style = GoogleNativeAdStyle.Small, nativeAd = nativeAd
+                    )
+                }
+            }
         },
         bottomBar = {
             if (showBottomAd.value) {
                 GoogleNativeAd(
-                    modifier = Modifier,
-                    style = GoogleNativeAdStyle.Small,
-                    nativeAd = nativeAd
+                    modifier = Modifier, style = GoogleNativeAdStyle.Small, nativeAd = nativeAd
                 )
             }
         }) { paddingValues ->
@@ -53,9 +67,7 @@ fun ServerScreenContent(
                 .padding(vertical = 10.sdp, horizontal = 10.sdp)
         ) {
             ServerMenu(
-                modifier = modifier,
-                list = list,
-                onServerClick = onServerClick
+                modifier = modifier, list = list, onServerClick = onServerClick
             )
         }
     }
