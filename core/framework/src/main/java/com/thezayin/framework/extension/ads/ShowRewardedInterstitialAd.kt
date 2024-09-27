@@ -4,8 +4,11 @@ import android.app.Activity
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.thezayin.ads.GoogleManager
+import com.thezayin.analytics.analytics.Analytics
+import com.thezayin.analytics.events.AnalyticsEvent
 
 fun Activity.showRewardedInterstitialAd(
+    analytics: Analytics,
     googleManager: GoogleManager,
     boolean: Boolean,
     callBack: (RewardedInterstitialAdStatus) -> Unit
@@ -17,7 +20,7 @@ fun Activity.showRewardedInterstitialAd(
 
     val adMob = googleManager.createRewardedInterstitialAd()
     adMob?.apply {
-        fullScreenContentCallback = AdmobRewardedInterListener(callBack)
+        fullScreenContentCallback = AdmobRewardedInterListener(callBack, analytics)
         show(this@showRewardedInterstitialAd) {
             callBack.invoke(RewardedInterstitialAdStatus.UserRewarded)
         }
@@ -26,6 +29,7 @@ fun Activity.showRewardedInterstitialAd(
 
 internal class AdmobRewardedInterListener(
     private val callback: (RewardedInterstitialAdStatus) -> Unit,
+    private val analytics: Analytics
 ) : FullScreenContentCallback() {
     private var clicks = 0
     private val vendor = "Google"
@@ -38,6 +42,15 @@ internal class AdmobRewardedInterListener(
     override fun onAdDismissedFullScreenContent() {
         super.onAdDismissedFullScreenContent()
         callback.invoke(RewardedInterstitialAdStatus.Shown(clicks, vendor))
+    }
+
+    override fun onAdImpression() {
+        super.onAdImpression()
+        analytics.logEvent(
+            AnalyticsEvent.InterstitialAdEvent(
+                status = "Rewarded_Ad_Impression"
+            )
+        )
     }
 
     override fun onAdFailedToShowFullScreenContent(p0: AdError) {

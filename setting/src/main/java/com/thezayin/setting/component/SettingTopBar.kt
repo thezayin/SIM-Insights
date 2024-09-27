@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -58,6 +59,8 @@ fun SettingTopBar(
             fontSize = 17.sp,
             fontFamily = FontFamily(Font(com.thezayin.font.R.font.abeezee_italic)),
         )
+
+        Spacer(modifier)
 
         if (showPremium) {
             ShadeCard(

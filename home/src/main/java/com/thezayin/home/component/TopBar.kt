@@ -18,7 +18,7 @@ import ir.kaaveh.sdpcompose.sdp
 @Composable
 internal fun TopBar(
     onMenuClick: () -> Unit = {},
-    onPremiumClick: () -> Unit = {},
+    onHistoryClick: () -> Unit = {},
     modifier: Modifier,
     showPremium: Boolean,
 ) {
@@ -47,20 +47,19 @@ internal fun TopBar(
             )
         }
 
-        if (showPremium) {
-            ShadeCard(
-                onClick = {
-                    onPremiumClick()
-                }, cornerRadius = 40.sdp, modifier = Modifier.size(25.sdp)
-            ) {
-                Image(
-                    painter = painterResource(id = com.thezayin.drawable.R.drawable.ic_crown),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(25.sdp)
-                        .padding(6.sdp),
-                )
-            }
+        ShadeCard(
+            onClick = {
+                onHistoryClick()
+            }, cornerRadius = 40.sdp, modifier = Modifier.size(25.sdp)
+        ) {
+            Image(
+                painter = painterResource(id = com.thezayin.drawable.R.drawable.ic_history),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(25.sdp)
+                    .padding(6.sdp),
+            )
+
         }
     }
 }

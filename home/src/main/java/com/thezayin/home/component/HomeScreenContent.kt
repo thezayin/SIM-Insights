@@ -1,6 +1,5 @@
 package com.thezayin.home.component
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,19 +14,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import com.google.android.gms.ads.nativead.NativeAd
 import com.thezayin.common.neumorphic.ConstantColor
+import com.thezayin.domain.model.HistoryModel
 import com.thezayin.framework.nativead.GoogleNativeAd
 import com.thezayin.framework.nativead.GoogleNativeAdStyle
+import ir.kaaveh.sdpcompose.sdp
 
 @Composable
 fun HomeScreenContent(
     modifier: Modifier,
     showPremium: Boolean,
-    onPremiumClick: () -> Unit,
+    historyList: List<HistoryModel>?,
+    onHistoryClick: () -> Unit,
     onMenuClick: () -> Unit,
     onServerClick: () -> Unit,
     onSearchClick: (String) -> Unit,
     nativeAd: NativeAd?,
-    showNativeAd: Boolean?,
     showServerList: Boolean,
 ) {
     val number = remember { mutableStateOf(TextFieldValue()) }
@@ -42,7 +43,7 @@ fun HomeScreenContent(
                 modifier = Modifier,
                 showPremium = showPremium,
                 onMenuClick = onMenuClick,
-                onPremiumClick = onPremiumClick
+                onHistoryClick = onHistoryClick
             )
         },
         bottomBar = {
@@ -54,18 +55,18 @@ fun HomeScreenContent(
                         modifier = Modifier,
                         onServerClick = onServerClick
                     )
-                    if (showNativeAd == true) {
-                        GoogleNativeAd(
-                            modifier = Modifier,
-                            style = GoogleNativeAdStyle.Small,
-                            nativeAd = nativeAd
-                        )
-                    }
+                    GoogleNativeAd(
+                        modifier = Modifier,
+                        style = GoogleNativeAdStyle.Small,
+                        nativeAd = nativeAd
+                    )
                 }
+            } else {
+                TipsAndTricksSection()
             }
         }
     ) { paddingValues ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
@@ -75,6 +76,10 @@ fun HomeScreenContent(
                 number = number,
                 showWarning = showWarning,
                 onSearchClick = onSearchClick
+            )
+            RecentPeak(
+                modifier = Modifier.padding(10.sdp),
+                list = historyList
             )
         }
     }

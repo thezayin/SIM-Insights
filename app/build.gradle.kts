@@ -74,6 +74,7 @@ dependencies {
     implementation(project(":result:presentation"))
     implementation(project(":splash:presentation"))
     implementation(project(":server:presentation"))
+    implementation(project(":recent:presentation"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

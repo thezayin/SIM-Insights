@@ -13,6 +13,7 @@ import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.common.dailogs.ErrorDialog
 import com.thezayin.common.dailogs.LoadingDialog
 import com.thezayin.framework.ads.interstitialAd
+import com.thezayin.framework.extension.ads.showRewardedInterstitialAd
 import com.thezayin.framework.lifecycles.ComposableLifecycle
 import com.thezayin.framework.nativead.GoogleNativeAd
 import com.thezayin.framework.nativead.GoogleNativeAdStyle
@@ -83,6 +84,7 @@ fun ServerScreen(
             showBottomAd = showBottomAd,
             nativeAd = nativeAd.value,
             modifier = Modifier,
+            showPremium = viewModel.remoteConfig.adConfigs.showPremium,
             list = it,
             onBackClick = {
                 activity.interstitialAd(
@@ -102,19 +104,18 @@ fun ServerScreen(
                     showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick
                 ) { onPremiumClick() }
             },
-            onServerClick = {
-                activity.interstitialAd(
-                    scope = scope,
+            onServerClick = {server->
+                activity.showRewardedInterstitialAd(
                     analytics = viewModel.analytics,
                     googleManager = viewModel.googleManager,
-                    showAd = viewModel.remoteConfig.adConfigs.onServerClick
+                    boolean = viewModel.remoteConfig.adConfigs.onServerClick
                 ) {
                     viewModel.analytics.logEvent(
                         AnalyticsEvent.ServerSelectionEvent(
-                            status = it
+                            status = server
                         )
                     )
-                    onServerClick(it)
+                    onServerClick(server)
                 }
             }
         )

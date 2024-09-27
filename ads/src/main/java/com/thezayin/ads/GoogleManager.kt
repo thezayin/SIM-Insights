@@ -19,6 +19,7 @@ import com.thezayin.ads.ump.ConsentManager
 import com.thezayin.ads.utils.AdUnit
 import com.thezayin.analytics.analytics.Analytics
 import com.thezayin.analytics.events.AnalyticsEvent
+import com.vungle.ads.VunglePrivacySettings
 
 class GoogleManager(
     private val context: Context,
@@ -39,10 +40,18 @@ class GoogleManager(
     )
 
     fun init(activity: Activity) {
-        consentManager.getUserConsent(activity = activity,
-            onConsentGranted = { loadAds() },
-            onError = { loadAds() })
+        loadAds()
+        setMonetizationAdaptersGDPR()
     }
+
+    private fun setMonetizationAdaptersGDPR() {
+        // Vungle
+        VunglePrivacySettings.apply {
+            setGDPRStatus(true, "1.0.0")
+            setCCPAStatus(true)
+        }
+    }
+
 
     fun initOnLastConsent() = consentManager.ifCanRequestAds { loadAds() }
 

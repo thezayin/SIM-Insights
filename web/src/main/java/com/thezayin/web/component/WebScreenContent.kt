@@ -10,6 +10,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -35,6 +36,7 @@ import java.io.InputStreamReader
 fun WebScreenContent(
     modifier: Modifier,
     url: String,
+    showPremium: Boolean,
     backEnabled: MutableState<Boolean>,
     infoDialog: MutableState<Boolean>,
     showLoading: () -> Unit,
@@ -67,11 +69,22 @@ fun WebScreenContent(
             .navigationBarsPadding(),
         containerColor = ConstantColor.NeumorphismLightBackgroundColor,
         topBar = {
-            TopBar(
-                modifier = Modifier,
-                onBackClick = onBackClick,
-                onPremiumClick = onPremiumClick
-            )
+            Column {
+                TopBar(
+                    screenName = "Search on Server",
+                    modifier = Modifier,
+                    showPremium = showPremium,
+                    onBackClick = onBackClick,
+                    onPremiumClick = onPremiumClick
+                )
+                if (showBottomAd == true) {
+                    GoogleNativeAd(
+                        modifier = Modifier,
+                        style = GoogleNativeAdStyle.Small,
+                        nativeAd = nativeAd.value
+                    )
+                }
+            }
         },
         bottomBar = {
             if (showBottomAd == true) {

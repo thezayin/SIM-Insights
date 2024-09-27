@@ -6,6 +6,7 @@ import com.thezayin.analytics.di.analyticsModule
 import com.thezayin.framework.di.featureModule
 import com.thezayin.home.di.homeModule
 import com.thezayin.premium.di.premiumModule
+import com.thezayin.presentation.di.historyModule
 import com.thezayin.presentation.di.resultModule
 import com.thezayin.presentation.di.serverModule
 import com.thezayin.presentation.di.splashModule
@@ -32,7 +33,8 @@ class App : Application() {
                 serverModule,
                 settingModule,
                 premiumModule,
-                analyticsModule
+                analyticsModule,
+                historyModule
             )
         }
     }

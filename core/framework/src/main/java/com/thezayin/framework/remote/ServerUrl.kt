@@ -13,11 +13,11 @@ data class ServerUrl(
 )
 
 val defaultServerUrl = """
-   {
-    "first_url": "https://paksimtracker.com/pak-sim-tracker/",
-    "second_url": "https://simownerdata.pk/",
-    "third_url": "https://simdatabase.info/search",
-    "fourth_url": "https://pakdb.xyz/sim-ownership/",
-    "fifth_url": "https://pakdataga.com/sim/search.php"
+{
+  "first_url": "https://simdata.net/",
+  "second_url": "https://simownerdata.com.pk/",
+  "third_url": "https://simdatabase.info/search",
+  "fourth_url": "https://simsinfopk.com/sim-info-3",
+  "fifth_url": "https://pakdb.xyz/pak-sim-data/"
 }
 """.trimIndent()
