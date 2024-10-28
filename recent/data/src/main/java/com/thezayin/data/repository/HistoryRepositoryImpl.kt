@@ -35,7 +35,7 @@ class HistoryRepositoryImpl(private val dao: HistoryDao) : HistoryRepository {
         try {
             emit(Response.Loading)
             Log.d("jejeRepo", "deleteAllData: ")
-           val result = dao.clearHistory()
+            val result = dao.clearHistory()
             Log.d("jejeRepoRE", "deleteAllData:${result} ")
             emit(Response.Success(Unit))
         } catch (e: Exception) {

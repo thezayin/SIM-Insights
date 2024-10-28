@@ -28,7 +28,10 @@ class HomeViewModel(
     private val _homeUiState = MutableStateFlow(HomeState())
     val homeUiState = _homeUiState.asStateFlow()
 
-    var nativeAd = mutableStateOf<NativeAd?>(null)
+    var homeBottomNativeAd = mutableStateOf<NativeAd?>(null)
+        private set
+
+    var homeBottomNativeAdMid = mutableStateOf<NativeAd?>(null)
         private set
 
     private fun homeUiEvent(event: HomeUiEvents) {
@@ -54,9 +57,12 @@ class HomeViewModel(
     }
 
     fun getNativeAd() = viewModelScope.launch {
-        nativeAd.value = googleManager.createNativeAd().apply {} ?: run {
-            delay(10000)
-            googleManager.createNativeAd()
+        googleManager.getNativeAd { ad ->
+            homeBottomNativeAd.value = ad
+        }
+        delay(2000L)
+        googleManager.getNativeAd { ad ->
+            homeBottomNativeAdMid.value = ad
         }
     }
 

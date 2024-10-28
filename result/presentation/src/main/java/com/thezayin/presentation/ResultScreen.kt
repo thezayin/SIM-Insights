@@ -13,8 +13,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.common.dailogs.ErrorDialog
+import com.thezayin.common.dailogs.LoadingAdDialog
 import com.thezayin.common.dailogs.LoadingDialog
-import com.thezayin.framework.ads.interstitialAd
+import com.thezayin.framework.extension.ads.showRewardedAd
 import com.thezayin.framework.lifecycles.ComposableLifecycle
 import com.thezayin.framework.nativead.GoogleNativeAd
 import com.thezayin.framework.nativead.GoogleNativeAdStyle
@@ -31,10 +32,16 @@ fun ResultScreen(phoneNumber: String, onBackPress: () -> Unit, onPremiumClick: (
     val state by viewModel.resultUiState.collectAsState()
     val scope = rememberCoroutineScope()
     val nativeAd = remember { viewModel.nativeAd }
+    val showAdLoading = remember { mutableStateOf(false) }
+
     val showBottomAd =
         remember { mutableStateOf(viewModel.remoteConfig.adConfigs.nativeAdOnResultScreen) }
     val showLoadingAd =
         remember { mutableStateOf(viewModel.remoteConfig.adConfigs.nativeAdOnResultLoadingDialog) }
+
+    if (showAdLoading.value) {
+        LoadingAdDialog()
+    }
 
     ComposableLifecycle { _, event ->
         when (event) {
@@ -83,21 +90,21 @@ fun ResultScreen(phoneNumber: String, onBackPress: () -> Unit, onPremiumClick: (
         showBottomAd = showBottomAd.value,
         resultNotFound = state.resultNotFound,
         onBackClick = {
-            activity.interstitialAd(
-                scope = scope,
+            activity.showRewardedAd(
+                showLoading = { showAdLoading.value = true },
+                hideLoading = { showAdLoading.value = false },
                 googleManager = viewModel.googleManager,
-                analytics = viewModel.analytics,
                 showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
-                callBack = { onBackPress() }
+                callback = onBackPress
             )
         },
         onPremiumClick = {
-            activity.interstitialAd(
-                scope = scope,
+            activity.showRewardedAd(
+                showLoading = { showAdLoading.value = true },
+                hideLoading = { showAdLoading.value = false },
                 googleManager = viewModel.googleManager,
-                analytics = viewModel.analytics,
-                showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick,
-                callBack = { onPremiumClick() }
+                showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                callback = onPremiumClick
             )
         }
     )

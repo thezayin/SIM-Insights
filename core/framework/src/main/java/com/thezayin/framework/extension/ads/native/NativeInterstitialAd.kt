@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineScope
 fun GoogleManager.createNativeInterstitialAd(
     context: Context,
     scope: CoroutineScope,
-    nativeAd: NativeAd? = createNativeAd(),
+    nativeAd: NativeAd?,
     onDismiss: () -> Unit
 ) {
     if (nativeAd == null) {

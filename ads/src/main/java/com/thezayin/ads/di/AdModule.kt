@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 val adModule = module {
     single { ConsentManager(get()) }
-    single { GoogleManager(get(), get(), get()) }
+    single { GoogleManager(get()) }
 }

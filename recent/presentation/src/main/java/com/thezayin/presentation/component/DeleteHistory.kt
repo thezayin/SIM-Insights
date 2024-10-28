@@ -25,15 +25,19 @@ fun DeleteHistory(
     onDeleted: () -> Unit = {}
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(horizontal = 15.sdp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 15.sdp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End
     ) {
         ShadeCard(
-            modifier = Modifier.size(40.sdp).clickable {
-                onDeleted()
-                Log.d("jejeDeleteHistory", "Delete History")
-                                                       },
+            modifier = Modifier
+                .size(40.sdp)
+                .clickable {
+                    onDeleted()
+                    Log.d("jejeDeleteHistory", "Delete History")
+                },
             cornerRadius = 40.sdp,
             backgroundColor = ConstantColor.NeumorphismLightBackgroundColor
         ) {

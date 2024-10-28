@@ -2,6 +2,7 @@ package com.thezayin.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +25,7 @@ fun ResultContent(
     number: String = ""
 ) {
     ShadeCard(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         cornerRadius = 10.sdp,
         backgroundColor = ConstantColor.NeumorphismLightBackgroundColor
     ) {
@@ -46,8 +47,8 @@ fun ResultContent(
                 fontFamily = FontFamily(Font(com.thezayin.font.R.font.abeezee_italic)),
                 color = colorResource(id = com.thezayin.values.R.color.black),
                 fontSize = 16.ssp,
-                
-            )
+
+                )
             Text(
                 text = "CNIC:",
                 fontSize = 10.ssp,
@@ -91,7 +92,6 @@ fun ResultContent(
                 color = colorResource(id = com.thezayin.values.R.color.black),
                 fontSize = 16.ssp,
             )
-
         }
     }
 }

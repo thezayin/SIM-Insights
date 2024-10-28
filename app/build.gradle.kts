@@ -19,8 +19,8 @@ android {
         applicationId = "com.thezayin.paksimdata"
         minSdk = libs.versions.minSdkVersion.get().toInt()
         targetSdk = libs.versions.targetSdkVersion.get().toInt()
-        versionCode = 7
-        versionName = "1.0.7"
+        versionCode = 9
+        versionName = "1.0.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

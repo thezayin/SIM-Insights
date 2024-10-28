@@ -58,10 +58,10 @@ fun SplashScreen(
     LaunchedEffect(Unit) {
         delay(10000)
         activity.showAppOpenAd(
-            analytics = viewModel.analytics,
             googleManager = viewModel.googleManager,
             showAd = viewModel.remoteConfig.adConfigs.adOnSplashScreen,
-        ) { onNavigate() }
+            callBack = onNavigate
+        )
     }
 
     Scaffold(

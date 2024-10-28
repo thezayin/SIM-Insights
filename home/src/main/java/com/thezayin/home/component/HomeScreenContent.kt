@@ -27,8 +27,10 @@ fun HomeScreenContent(
     onHistoryClick: () -> Unit,
     onMenuClick: () -> Unit,
     onServerClick: () -> Unit,
+    showHistory: Boolean,
     onSearchClick: (String) -> Unit,
-    nativeAd: NativeAd?,
+    homeBottomNativeAd: NativeAd?,
+    homeBottomNativeAdMid: NativeAd?,
     showServerList: Boolean,
 ) {
     val number = remember { mutableStateOf(TextFieldValue()) }
@@ -58,7 +60,7 @@ fun HomeScreenContent(
                     GoogleNativeAd(
                         modifier = Modifier,
                         style = GoogleNativeAdStyle.Small,
-                        nativeAd = nativeAd
+                        nativeAd = homeBottomNativeAd
                     )
                 }
             } else {
@@ -77,10 +79,18 @@ fun HomeScreenContent(
                 showWarning = showWarning,
                 onSearchClick = onSearchClick
             )
-            RecentPeak(
-                modifier = Modifier.padding(10.sdp),
-                list = historyList
-            )
+            if (!showHistory) {
+                RecentPeak(
+                    modifier = Modifier.padding(10.sdp),
+                    list = historyList
+                )
+            } else {
+                GoogleNativeAd(
+                    modifier = Modifier,
+                    style = GoogleNativeAdStyle.Small,
+                    nativeAd = homeBottomNativeAdMid
+                )
+            }
         }
     }
 }

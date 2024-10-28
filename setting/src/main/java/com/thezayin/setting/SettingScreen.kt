@@ -9,7 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import com.thezayin.analytics.events.AnalyticsEvent
-import com.thezayin.framework.ads.interstitialAd
+import com.thezayin.common.dailogs.LoadingAdDialog
+import com.thezayin.framework.extension.ads.showRewardedAd
 import com.thezayin.framework.lifecycles.ComposableLifecycle
 import com.thezayin.setting.component.SettingScreenContent
 import kotlinx.coroutines.delay
@@ -23,7 +24,7 @@ fun SettingScreen(
     onPremiumClick: () -> Unit
 ) {
     val viewModel: SettingViewModel = koinInject()
-
+    val showAdLoading = remember { mutableStateOf(false) }
     val activity = LocalContext.current as Activity
     val scope = rememberCoroutineScope()
     val nativeAd = remember { viewModel.nativeAd }
@@ -31,6 +32,10 @@ fun SettingScreen(
         remember { mutableStateOf(viewModel.remoteConfig.adConfigs.nativeAdOnSettingScreen) }
 
     viewModel.analytics.logEvent(AnalyticsEvent.ScreenViewEvent("SettingScreen"))
+
+    if (showAdLoading.value) {
+        LoadingAdDialog()
+    }
 
     ComposableLifecycle { _, event ->
         when (event) {
@@ -53,20 +58,22 @@ fun SettingScreen(
         nativeAd = nativeAd.value,
         showPremium = viewModel.remoteConfig.adConfigs.showPremium,
         onBackClick = {
-            activity.interstitialAd(
-                scope = scope,
-                analytics = viewModel.analytics,
+            activity.showRewardedAd(
+                showLoading = { showAdLoading.value = true },
+                hideLoading = { showAdLoading.value = false },
                 googleManager = viewModel.googleManager,
-                showAd = viewModel.remoteConfig.adConfigs.adOnBackPress
-            ) { onBackClick() }
+                showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                callback = onBackClick
+            )
         },
         onPremiumClick = {
-            activity.interstitialAd(
-                scope = scope,
-                analytics = viewModel.analytics,
+            activity.showRewardedAd(
+                showLoading = { showAdLoading.value = true },
+                hideLoading = { showAdLoading.value = false },
                 googleManager = viewModel.googleManager,
-                showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick
-            ) { onPremiumClick() }
+                showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                callback = onPremiumClick
+            )
         }
     )
 }

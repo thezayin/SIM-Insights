@@ -33,10 +33,8 @@ class HistoryViewModel(
         private set
 
     fun getNativeAd() = viewModelScope.launch {
-        nativeAd.value = googleManager.createNativeAd().apply {
-        } ?: run {
-            delay(10000)
-            googleManager.createNativeAd()
+        googleManager.getNativeAd { ad ->
+            nativeAd.value = ad
         }
     }
 
@@ -116,7 +114,7 @@ class HistoryViewModel(
     }
 
 
-     fun showDeleteDialog(show: Boolean) {
+    fun showDeleteDialog(show: Boolean) {
         historyUiEvent(HistoryUiEvent.DeleteDialogShow(show))
     }
 

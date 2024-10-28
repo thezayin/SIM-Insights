@@ -20,11 +20,8 @@ class SettingViewModel(
         private set
 
     fun getNativeAd() = viewModelScope.launch {
-        nativeAd.value = googleManager.createNativeAd().apply {
-        } ?: run {
-            delay(10000)
-            googleManager.createNativeAd()
+        googleManager.getNativeAd { ad ->
+            nativeAd.value = ad
         }
     }
-
 }

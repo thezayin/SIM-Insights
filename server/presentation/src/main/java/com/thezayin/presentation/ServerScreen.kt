@@ -11,9 +11,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.Lifecycle
 import com.thezayin.analytics.events.AnalyticsEvent
 import com.thezayin.common.dailogs.ErrorDialog
+import com.thezayin.common.dailogs.LoadingAdDialog
 import com.thezayin.common.dailogs.LoadingDialog
-import com.thezayin.framework.ads.interstitialAd
-import com.thezayin.framework.extension.ads.showRewardedInterstitialAd
+import com.thezayin.framework.extension.ads.showRewardedAd
 import com.thezayin.framework.lifecycles.ComposableLifecycle
 import com.thezayin.framework.nativead.GoogleNativeAd
 import com.thezayin.framework.nativead.GoogleNativeAdStyle
@@ -35,12 +35,18 @@ fun ServerScreen(
     val activity = LocalContext.current as Activity
     val scope = rememberCoroutineScope()
     val nativeAd = remember { viewModel.nativeAd }
+    val showAdLoading = remember { mutableStateOf(false) }
+
     val showBottomAd =
         remember { mutableStateOf(viewModel.remoteConfig.adConfigs.nativeAdOnServerScreen) }
     val showLoadingAd =
         remember { mutableStateOf(viewModel.remoteConfig.adConfigs.nativeAdOnServerLoadingDialog) }
 
     viewModel.analytics.logEvent(AnalyticsEvent.ScreenViewEvent("ServerScreen"))
+
+    if (showAdLoading.value) {
+        LoadingAdDialog()
+    }
 
     if (state.loading) {
         LoadingDialog(
@@ -87,36 +93,38 @@ fun ServerScreen(
             showPremium = viewModel.remoteConfig.adConfigs.showPremium,
             list = it,
             onBackClick = {
-                activity.interstitialAd(
-                    scope = scope,
+                activity.showRewardedAd(
+                    showLoading = { showAdLoading.value = true },
+                    hideLoading = { showAdLoading.value = false },
                     googleManager = viewModel.googleManager,
-                    analytics = viewModel.analytics,
-                    showAd = viewModel.remoteConfig.adConfigs.adOnBackPress
-                ) {
-                    onBackPress()
-                }
+                    showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                    callback = onPremiumClick
+                )
             },
             onPremiumClick = {
-                activity.interstitialAd(
-                    scope = scope,
-                    analytics = viewModel.analytics,
+                activity.showRewardedAd(
+                    showLoading = { showAdLoading.value = true },
+                    hideLoading = { showAdLoading.value = false },
                     googleManager = viewModel.googleManager,
-                    showAd = viewModel.remoteConfig.adConfigs.adOnPremiumClick
-                ) { onPremiumClick() }
+                    showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                    callback = onPremiumClick
+                )
             },
-            onServerClick = {server->
-                activity.showRewardedInterstitialAd(
-                    analytics = viewModel.analytics,
+            onServerClick = { server ->
+                activity.showRewardedAd(
+                    showLoading = { showAdLoading.value = true },
+                    hideLoading = { showAdLoading.value = false },
                     googleManager = viewModel.googleManager,
-                    boolean = viewModel.remoteConfig.adConfigs.onServerClick
-                ) {
-                    viewModel.analytics.logEvent(
-                        AnalyticsEvent.ServerSelectionEvent(
-                            status = server
+                    showAd = viewModel.remoteConfig.adConfigs.adOnBackPress,
+                    callback = {
+                        viewModel.analytics.logEvent(
+                            AnalyticsEvent.ServerSelectionEvent(
+                                status = server
+                            )
                         )
-                    )
-                    onServerClick(server)
-                }
+                        onServerClick(server)
+                    }
+                )
             }
         )
     }
